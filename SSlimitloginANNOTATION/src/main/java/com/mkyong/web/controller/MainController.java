@@ -1,7 +1,5 @@
 package com.mkyong.web.controller;
 
-import java.security.Principal;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -118,5 +116,7 @@ public class MainController {
 		return model;
 
 	}
+	
+	
 
 }

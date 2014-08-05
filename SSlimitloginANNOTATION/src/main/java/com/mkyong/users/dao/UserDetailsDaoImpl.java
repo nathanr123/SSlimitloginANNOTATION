@@ -38,7 +38,6 @@ public class UserDetailsDaoImpl extends JdbcDaoSupport implements UserDetailsDao
 		setDataSource(dataSource);
 	}
 
-	@Override
 	public void updateFailAttempts(String username) {
 
 		UserAttempts user = getUserAttempts(username);
@@ -65,7 +64,6 @@ public class UserDetailsDaoImpl extends JdbcDaoSupport implements UserDetailsDao
 
 	}
 
-	@Override
 	public UserAttempts getUserAttempts(String username) {
 
 		try {
@@ -92,7 +90,6 @@ public class UserDetailsDaoImpl extends JdbcDaoSupport implements UserDetailsDao
 
 	}
 
-	@Override
 	public void resetFailAttempts(String username) {
 		
 		getJdbcTemplate().update(SQL_USER_ATTEMPTS_RESET_ATTEMPTS, new Object[] { username });
