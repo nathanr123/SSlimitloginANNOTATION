@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mkyong.users.model.User;
+import com.mkyong.users.model.UserDetail;
 
 @Controller
 @EnableWebMvcSecurity
@@ -55,9 +56,40 @@ public class UserController {
 		System.out.println("Is Credentials Expired : "
 				+ user.isCredentialsNonExpired());
 
+		UserDetail userdetailForm = new UserDetail();
+
+		userdetailForm.setUsername(user.getUsername());
+
+		model.put("userdetailForm", userdetailForm);
+
 		ModelAndView mav = new ModelAndView();
 
-		mav.addObject("msg", "New User Created Success");
+		mav.addObject("msg", "New User" + user.getUsername()
+				+ " Created Successfully");
+
+		mav.setViewName("userdetail");
+
+		return mav;
+
+	}
+
+	@RequestMapping(value = "/updateuserdetail", method = RequestMethod.POST)
+	public ModelAndView updateUserProfile(
+			@ModelAttribute("userdetailForm") UserDetail userDetail,
+			Map<String, Object> model) {
+
+		System.out.println("User Name : " + userDetail.getUsername());
+
+		System.out.println("Name : " + userDetail.getName());
+
+		System.out.println("Mail ID : " + userDetail.getMailid());
+
+		System.out.println("Mobile Number : " + userDetail.getMobileno());
+
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("msg", userDetail.getUsername()
+				+ " Profile updated Successfully !!!!!");
 
 		mav.setViewName("listuser");
 
