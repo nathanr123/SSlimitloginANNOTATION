@@ -1,5 +1,12 @@
 package com.mkyong.users.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "rems_users", catalog = "rems_db")
 public class User {
 
 	private String username;
@@ -22,6 +29,8 @@ public class User {
 
 	private String modifiedTime;
 
+	@Id
+	@Column(name = "username", nullable = false, unique = true, length = 16)
 	public synchronized String getUsername() {
 		return username;
 	}
@@ -30,6 +39,7 @@ public class User {
 		this.username = username;
 	}
 
+	@Column(name = "password", nullable = false, length = 16)
 	public synchronized String getPassword() {
 		return password;
 	}
@@ -38,6 +48,7 @@ public class User {
 		this.password = password;
 	}
 
+	@Column(name = "enabled", nullable = false)
 	public synchronized boolean isEnabled() {
 		return isEnabled;
 	}
@@ -46,6 +57,7 @@ public class User {
 		this.isEnabled = isEnabled;
 	}
 
+	@Column(name = "accountNonExpired", nullable = false)
 	public synchronized boolean isAccountNonExpired() {
 		return isAccountNonExpired;
 	}
@@ -54,6 +66,7 @@ public class User {
 		this.isAccountNonExpired = isAccountNonExpired;
 	}
 
+	@Column(name = "accountNonLocked", nullable = false)
 	public synchronized boolean isAccountNonLocked() {
 		return isAccountNonLocked;
 	}
@@ -62,6 +75,7 @@ public class User {
 		this.isAccountNonLocked = isAccountNonLocked;
 	}
 
+	@Column(name = "credentialsNonExpired", nullable = false)
 	public synchronized boolean isCredentialsNonExpired() {
 		return isCredentialsNonExpired;
 	}
@@ -71,6 +85,7 @@ public class User {
 		this.isCredentialsNonExpired = isCredentialsNonExpired;
 	}
 
+	@Column(name = "groupid", nullable = false)
 	public synchronized String getGroupid() {
 		return groupid;
 	}
@@ -79,6 +94,7 @@ public class User {
 		this.groupid = groupid;
 	}
 
+	@Column(name = "priority", nullable = false)
 	public synchronized int getPriority() {
 		return priority;
 	}
@@ -87,6 +103,7 @@ public class User {
 		this.priority = priority;
 	}
 
+	@Column(name = "createdtime", nullable = false)
 	public synchronized String getCreatedTime() {
 		return createdTime;
 	}
@@ -95,6 +112,7 @@ public class User {
 		this.createdTime = createdTime;
 	}
 
+	@Column(name = "modifiedtime", nullable = false)
 	public synchronized String getModifiedTime() {
 		return modifiedTime;
 	}
