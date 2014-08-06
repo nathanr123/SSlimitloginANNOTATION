@@ -1,47 +1,40 @@
 package com.mkyong.users.model;
 
-public class UserAttempts {
+public class UserRole {
 
-	private String username;
+	private String roleid;
 	
-	private int nofattempts;
+	private String roletype;
 	
 	private String createdtime;
 	
 	private String modifiedtime;
-
 	
 	
-	public synchronized String getUsername() {
-		return username;
+	public synchronized String getRoleid() {
+		return roleid;
 	}
-
-	public synchronized void setUsername(String username) {
-		this.username = username;
+	public synchronized void setRoleid(String roleid) {
+		this.roleid = roleid;
 	}
-
-	public synchronized int getNofattempts() {
-		return nofattempts;
+	public synchronized String getRoletype() {
+		return roletype;
 	}
-
-	public synchronized void setNofattempts(int nofattempts) {
-		this.nofattempts = nofattempts;
+	public synchronized void setRoletype(String roletype) {
+		this.roletype = roletype;
 	}
-
 	public synchronized String getCreatedtime() {
 		return createdtime;
 	}
-
 	public synchronized void setCreatedtime(String createdtime) {
 		this.createdtime = createdtime;
 	}
-
 	public synchronized String getModifiedtime() {
 		return modifiedtime;
 	}
-
 	public synchronized void setModifiedtime(String modifiedtime) {
 		this.modifiedtime = modifiedtime;
 	}
-
+	
+	
 }

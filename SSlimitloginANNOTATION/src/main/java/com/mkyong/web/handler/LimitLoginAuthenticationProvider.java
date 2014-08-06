@@ -1,7 +1,5 @@
 package com.mkyong.web.handler;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -52,9 +50,8 @@ public class LimitLoginAuthenticationProvider extends DaoAuthenticationProvider 
 			//this user is locked!
 			String error = "";
 			UserAttempts userAttempts = userDetailsDao.getUserAttempts(authentication.getName());
-			if(userAttempts!=null){
-				Date lastAttempts = userAttempts.getLastModified();
-				error = "User account is locked! <br><br>Username : " + authentication.getName() + "<br>Last Attempts : " + lastAttempts;
+			if(userAttempts!=null){				
+				error = "User account is locked! <br><br>Username : " + authentication.getName() + "<br>Last Attempts : " + userAttempts.getModifiedtime();
 			}else{
 				error = e.getMessage();
 			}

@@ -6,6 +6,10 @@ public class User {
 
 	private String password;
 
+	private String groupid;
+
+	private int priority;
+
 	private boolean isEnabled;
 
 	private boolean isAccountNonExpired = true;
@@ -13,6 +17,10 @@ public class User {
 	private boolean isAccountNonLocked = true;
 
 	private boolean isCredentialsNonExpired = true;
+
+	private String createdTime;
+
+	private String modifiedTime;
 
 	public synchronized String getUsername() {
 		return username;
@@ -62,4 +70,37 @@ public class User {
 			boolean isCredentialsNonExpired) {
 		this.isCredentialsNonExpired = isCredentialsNonExpired;
 	}
+
+	public synchronized String getGroupid() {
+		return groupid;
+	}
+
+	public synchronized void setGroupid(String groupid) {
+		this.groupid = groupid;
+	}
+
+	public synchronized int getPriority() {
+		return priority;
+	}
+
+	public synchronized void setPriority(int priority) {
+		this.priority = priority;
+	}
+
+	public synchronized String getCreatedTime() {
+		return createdTime;
+	}
+
+	public synchronized void setCreatedTime(String createdTime) {
+		this.createdTime = createdTime;
+	}
+
+	public synchronized String getModifiedTime() {
+		return modifiedTime;
+	}
+
+	public synchronized void setModifiedTime(String modifiedTime) {
+		this.modifiedTime = modifiedTime;
+	}
+
 }

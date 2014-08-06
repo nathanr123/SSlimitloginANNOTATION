@@ -80,7 +80,7 @@ public class UserController {
 
 		System.out.println("User Name : " + userDetail.getUsername());
 
-		System.out.println("Name : " + userDetail.getName());
+		System.out.println("Name : " + userDetail.getFullname());
 
 		System.out.println("Mail ID : " + userDetail.getMailid());
 

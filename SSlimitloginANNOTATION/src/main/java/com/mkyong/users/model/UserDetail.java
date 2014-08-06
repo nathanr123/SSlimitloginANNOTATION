@@ -4,12 +4,18 @@ public class UserDetail {
 
 	private String username;
 
-	private String name;
+	private String fullname;
 
 	private String mailid;
 
 	private String mobileno;
 
+	private String createdTime;
+
+	private String modifiedTime;
+
+	
+	
 	public synchronized String getUsername() {
 		return username;
 	}
@@ -18,12 +24,12 @@ public class UserDetail {
 		this.username = username;
 	}
 
-	public synchronized String getName() {
-		return name;
+	public synchronized String getFullname() {
+		return fullname;
 	}
 
-	public synchronized void setName(String name) {
-		this.name = name;
+	public synchronized void setFullname(String fullname) {
+		this.fullname = fullname;
 	}
 
 	public synchronized String getMailid() {
@@ -41,4 +47,21 @@ public class UserDetail {
 	public synchronized void setMobileno(String mobileno) {
 		this.mobileno = mobileno;
 	}
+
+	public synchronized String getCreatedTime() {
+		return createdTime;
+	}
+
+	public synchronized void setCreatedTime(String createdTime) {
+		this.createdTime = createdTime;
+	}
+
+	public synchronized String getModifiedTime() {
+		return modifiedTime;
+	}
+
+	public synchronized void setModifiedTime(String modifiedTime) {
+		this.modifiedTime = modifiedTime;
+	}
+
 }
