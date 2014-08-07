@@ -1,6 +1,10 @@
 package com.mkyong.users.model;
 
+import java.util.Date;
+
 public class Port {
+
+	// Variables for corresponding to DB Table
 
 	private String portid;
 
@@ -14,72 +18,164 @@ public class Port {
 
 	private String porttype;
 
-	private String createdtime;
+	private Date createdtime;
 
-	private String modifiedtime;
+	private Date modifiedtime;
 
-	public synchronized String getPortid() {
-		return portid;
-	}
+	// Constructors
 
-	public synchronized void setPortid(String portid) {
+	/**
+	 * @param portid
+	 * @param switchid
+	 * @param portname
+	 * @param portnumber
+	 * @param portstatus
+	 * @param porttype
+	 * @param createdtime
+	 * @param modifiedtime
+	 */
+	public Port(String portid, String switchid, String portname,
+			int portnumber, String portstatus, String porttype,
+			Date createdtime, Date modifiedtime) {
+
 		this.portid = portid;
-	}
 
-	public synchronized String getSwitchid() {
-		return switchid;
-	}
-
-	public synchronized void setSwitchid(String switchid) {
 		this.switchid = switchid;
-	}
 
-	public synchronized String getPortname() {
-		return portname;
-	}
-
-	public synchronized void setPortname(String portname) {
 		this.portname = portname;
-	}
 
-	public synchronized int getPortnumber() {
-		return portnumber;
-	}
-
-	public synchronized void setPortnumber(int portnumber) {
 		this.portnumber = portnumber;
-	}
 
-	public synchronized String getPortstatus() {
-		return portstatus;
-	}
-
-	public synchronized void setPortstatus(String portstatus) {
 		this.portstatus = portstatus;
-	}
 
-	public synchronized String getPorttype() {
-		return porttype;
-	}
-
-	public synchronized void setPorttype(String porttype) {
 		this.porttype = porttype;
-	}
 
-	public synchronized String getCreatedtime() {
-		return createdtime;
-	}
-
-	public synchronized void setCreatedtime(String createdtime) {
 		this.createdtime = createdtime;
-	}
 
-	public synchronized String getModifiedtime() {
-		return modifiedtime;
-	}
-
-	public synchronized void setModifiedtime(String modifiedtime) {
 		this.modifiedtime = modifiedtime;
 	}
 
+	// Getter Methods
+
+	/**
+	 * @return the portid
+	 */
+	public String getPortid() {
+		return portid;
+	}
+
+	/**
+	 * @return the switchid
+	 */
+	public String getSwitchid() {
+		return switchid;
+	}
+
+	/**
+	 * @return the portname
+	 */
+	public String getPortname() {
+		return portname;
+	}
+
+	/**
+	 * @return the portnumber
+	 */
+	public int getPortnumber() {
+		return portnumber;
+	}
+
+	/**
+	 * @return the portstatus
+	 */
+	public String getPortstatus() {
+		return portstatus;
+	}
+
+	/**
+	 * @return the porttype
+	 */
+	public String getPorttype() {
+		return porttype;
+	}
+
+	/**
+	 * @return the createdtime
+	 */
+	public Date getCreatedtime() {
+		return createdtime;
+	}
+
+	/**
+	 * @return the modifiedtime
+	 */
+	public Date getModifiedtime() {
+		return modifiedtime;
+	}
+
+	// Setter Methods
+
+	/**
+	 * @param portid
+	 *            the portid to set
+	 */
+	public void setPortid(String portid) {
+		this.portid = portid;
+	}
+
+	/**
+	 * @param switchid
+	 *            the switchid to set
+	 */
+	public void setSwitchid(String switchid) {
+		this.switchid = switchid;
+	}
+
+	/**
+	 * @param portname
+	 *            the portname to set
+	 */
+	public void setPortname(String portname) {
+		this.portname = portname;
+	}
+
+	/**
+	 * @param portnumber
+	 *            the portnumber to set
+	 */
+	public void setPortnumber(int portnumber) {
+		this.portnumber = portnumber;
+	}
+
+	/**
+	 * @param portstatus
+	 *            the portstatus to set
+	 */
+	public void setPortstatus(String portstatus) {
+		this.portstatus = portstatus;
+	}
+
+	/**
+	 * @param porttype
+	 *            the porttype to set
+	 */
+	public void setPorttype(String porttype) {
+		this.porttype = porttype;
+	}
+
+	/**
+	 * @param createdtime
+	 *            the createdtime to set
+	 */
+	public void setCreatedtime(Date createdtime) {
+		this.createdtime = createdtime;
+	}
+
+	/**
+	 * @param modifiedtime
+	 *            the modifiedtime to set
+	 */
+	public void setModifiedtime(Date modifiedtime) {
+		this.modifiedtime = modifiedtime;
+	}
 }

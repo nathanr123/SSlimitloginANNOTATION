@@ -1,17 +1,17 @@
 package com.mkyong.users.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-
 @Entity
-@Table(name="rems_user_group",catalog="rems_db")
+@Table(name = "rems_group", catalog = "rems_db")
 public class UserGroup {
+
+	// Variables for corresponding to DB Table
 
 	private String groupid;
 
@@ -21,66 +21,140 @@ public class UserGroup {
 
 	private String priority;
 
-	private String createdtime;
+	private Date createdtime;
 
-	private String modifiedtime;
+	private Date modifiedtime;
 
-	
+	// Constructors
+
+	/**
+	 * @param groupid
+	 * @param groupname
+	 * @param roleid
+	 * @param priority
+	 * @param createdtime
+	 * @param modifiedtime
+	 */
+	public UserGroup(String groupid, String groupname, String roleid,
+			String priority, Date createdtime, Date modifiedtime) {
+
+		this.groupid = groupid;
+
+		this.groupname = groupname;
+
+		this.roleid = roleid;
+
+		this.priority = priority;
+
+		this.createdtime = createdtime;
+
+		this.modifiedtime = modifiedtime;
+	}
+
+	// Getter Methods
+
+	/**
+	 * @return the groupid
+	 */
+
 	@Id
 	@Column(name = "groupid", nullable = false, unique = true, length = 10)
-	public synchronized String getGroupid() {
+	public String getGroupid() {
 		return groupid;
 	}
 
-	public synchronized void setGroupid(String groupid) {
-		this.groupid = groupid;
-	}
+	/**
+	 * @return the groupname
+	 */
 
 	@Column(name = "groupname", nullable = false, length = 35)
-	public synchronized String getGroupname() {
+	public String getGroupname() {
 		return groupname;
 	}
 
-	public synchronized void setGroupname(String groupname) {
-		this.groupname = groupname;
-	}
+	/**
+	 * @return the roleid
+	 */
 
-	@GenericGenerator(name = "generator", strategy = "foreign", 
-			parameters = @Parameter(name = "property", value = "rems_user_role"))
-	@GeneratedValue(generator = "generator")
-	@Column(name = "roleid", nullable = false)
-	public synchronized String getRoleid() {
+	@Column(name = "roleid", nullable = false, length = 35)
+	public String getRoleid() {
 		return roleid;
 	}
 
-	public synchronized void setRoleid(String roleid) {
-		this.roleid = roleid;
-	}
+	/**
+	 * @return the priority
+	 */
 
 	@Column(name = "priority", nullable = false)
-	public synchronized String getPriority() {
+	public String getPriority() {
 		return priority;
 	}
 
-	public synchronized void setPriority(String priority) {
-		this.priority = priority;
-	}
+	/**
+	 * @return the createdtime
+	 */
 
 	@Column(name = "createdtime", nullable = false)
-	public synchronized String getCreatedtime() {
+	public Date getCreatedtime() {
 		return createdtime;
 	}
 
-	public synchronized void setCreatedtime(String createdtime) {
-		this.createdtime = createdtime;
-	}
+	/**
+	 * @return the modifiedtime
+	 */
 
 	@Column(name = "modifiedtime", nullable = false)
-	public synchronized String getModifiedtime() {
+	public Date getModifiedtime() {
 		return modifiedtime;
 	}
 
-	public synchronized void setModifiedtime(String modifiedtime) {
+	// Setter Methods
+
+	/**
+	 * @param groupid
+	 *            the groupid to set
+	 */
+	public void setGroupid(String groupid) {
+		this.groupid = groupid;
+	}
+
+	/**
+	 * @param groupname
+	 *            the groupname to set
+	 */
+	public void setGroupname(String groupname) {
+		this.groupname = groupname;
+	}
+
+	/**
+	 * @param roleid
+	 *            the roleid to set
+	 */
+	public void setRoleid(String roleid) {
+		this.roleid = roleid;
+	}
+
+	/**
+	 * @param priority
+	 *            the priority to set
+	 */
+	public void setPriority(String priority) {
+		this.priority = priority;
+	}
+
+	/**
+	 * @param createdtime
+	 *            the createdtime to set
+	 */
+	public void setCreatedtime(Date createdtime) {
+		this.createdtime = createdtime;
+	}
+
+	/**
+	 * @param modifiedtime
+	 *            the modifiedtime to set
+	 */
+	public void setModifiedtime(Date modifiedtime) {
 		this.modifiedtime = modifiedtime;
 	}
 

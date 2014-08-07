@@ -1,130 +1,225 @@
 package com.mkyong.users.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-
 @Entity
-@Table(name = "rems_users", catalog = "rems_db")
+@Table(name = "rems_user", catalog = "rems_db")
 public class User {
+
+	// Variables for corresponding to DB Table
 
 	private String username;
 
 	private String password;
 
-	private String groupid;
-
 	private int priority;
 
-	private boolean isEnabled;
+	private boolean enabled;
 
-	private boolean isAccountNonExpired = true;
+	private boolean accountNonExpired;
 
-	private boolean isAccountNonLocked = true;
+	private boolean accountNonLocked;
 
-	private boolean isCredentialsNonExpired = true;
+	private boolean credentialsNonExpired;
 
-	private String createdTime;
+	private Date createdtime;
 
-	private String modifiedTime;
+	private Date modifiedtime;
 
+	// Constructors
+
+	/**
+	 * 
+	 */
+	public User() {
+	}
+
+	/**
+	 * @param username
+	 * @param password
+	 * @param priority
+	 * @param enabled
+	 * @param accountNonExpired
+	 * @param accountNonLocked
+	 * @param credentialsNonExpired
+	 * @param createdtime
+	 * @param modifiedtime
+	 */
+	public User(String username, String password, int priority,
+			boolean enabled, boolean accountNonExpired,
+			boolean accountNonLocked, boolean credentialsNonExpired,
+			Date createdtime, Date modifiedtime) {
+
+		this.username = username;
+
+		this.password = password;
+
+		this.priority = priority;
+
+		this.enabled = enabled;
+
+		this.accountNonExpired = accountNonExpired;
+
+		this.accountNonLocked = accountNonLocked;
+
+		this.credentialsNonExpired = credentialsNonExpired;
+
+		this.createdtime = createdtime;
+		this.modifiedtime = modifiedtime;
+	}
+
+	// Getter Methods
+
+	/**
+	 * @return the username
+	 */
 	@Id
 	@Column(name = "username", nullable = false, unique = true, length = 16)
-	public synchronized String getUsername() {
+	public String getUsername() {
 		return username;
 	}
 
-	public synchronized void setUsername(String username) {
-		this.username = username;
-	}
-
+	/**
+	 * @return the password
+	 */
 	@Column(name = "password", nullable = false, length = 16)
-	public synchronized String getPassword() {
+	public String getPassword() {
 		return password;
 	}
 
-	public synchronized void setPassword(String password) {
-		this.password = password;
-	}
-
-	@Column(name = "enabled", nullable = false)
-	public synchronized boolean isEnabled() {
-		return isEnabled;
-	}
-
-	public synchronized void setEnabled(boolean isEnabled) {
-		this.isEnabled = isEnabled;
-	}
-
-	@Column(name = "accountNonExpired", nullable = false)
-	public synchronized boolean isAccountNonExpired() {
-		return isAccountNonExpired;
-	}
-
-	public synchronized void setAccountNonExpired(boolean isAccountNonExpired) {
-		this.isAccountNonExpired = isAccountNonExpired;
-	}
-
-	@Column(name = "accountNonLocked", nullable = false)
-	public synchronized boolean isAccountNonLocked() {
-		return isAccountNonLocked;
-	}
-
-	public synchronized void setAccountNonLocked(boolean isAccountNonLocked) {
-		this.isAccountNonLocked = isAccountNonLocked;
-	}
-
-	@Column(name = "credentialsNonExpired", nullable = false)
-	public synchronized boolean isCredentialsNonExpired() {
-		return isCredentialsNonExpired;
-	}
-
-	public synchronized void setCredentialsNonExpired(
-			boolean isCredentialsNonExpired) {
-		this.isCredentialsNonExpired = isCredentialsNonExpired;
-	}
-
-	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "rems_user_group"))
-	@GeneratedValue(generator = "generator")
-	@Column(name = "groupid", nullable = false)
-	public synchronized String getGroupid() {
-		return groupid;
-	}
-
-	public synchronized void setGroupid(String groupid) {
-		this.groupid = groupid;
-	}
-
+	/**
+	 * @return the priority
+	 */
 	@Column(name = "priority", nullable = false)
-	public synchronized int getPriority() {
+	public int getPriority() {
 		return priority;
 	}
 
-	public synchronized void setPriority(int priority) {
+	/**
+	 * @return the enabled
+	 */
+	@Column(name = "enabled", nullable = false)
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	/**
+	 * @return the accountNonExpired
+	 */
+	@Column(name = "accountNonExpired", nullable = false)
+	public boolean isAccountNonExpired() {
+		return accountNonExpired;
+	}
+
+	/**
+	 * @return the accountNonLocked
+	 */
+	@Column(name = "accountNonLocked", nullable = false)
+	public boolean isAccountNonLocked() {
+		return accountNonLocked;
+	}
+
+	/**
+	 * @return the credentialsNonExpired
+	 */
+	@Column(name = "credentialsNonExpired", nullable = false)
+	public boolean isCredentialsNonExpired() {
+		return credentialsNonExpired;
+	}
+
+	/**
+	 * @return the createdtime
+	 */
+	@Column(name = "createdtime", nullable = false)
+	public Date getCreatedtime() {
+		return createdtime;
+	}
+
+	/**
+	 * @return the modifiedtime
+	 */
+	@Column(name = "modifiedtime", nullable = false)
+	public Date getModifiedtime() {
+		return modifiedtime;
+	}
+
+	// Setter Methods
+
+	/**
+	 * @param username
+	 *            the username to set
+	 */
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	/**
+	 * @param password
+	 *            the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	/**
+	 * @param priority
+	 *            the priority to set
+	 */
+	public void setPriority(int priority) {
 		this.priority = priority;
 	}
 
-	@Column(name = "createdtime", nullable = false)
-	public synchronized String getCreatedTime() {
-		return createdTime;
+	/**
+	 * @param enabled
+	 *            the enabled to set
+	 */
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
-	public synchronized void setCreatedTime(String createdTime) {
-		this.createdTime = createdTime;
+	/**
+	 * @param accountNonExpired
+	 *            the accountNonExpired to set
+	 */
+	public void setAccountNonExpired(boolean accountNonExpired) {
+		this.accountNonExpired = accountNonExpired;
 	}
 
-	@Column(name = "modifiedtime", nullable = false)
-	public synchronized String getModifiedTime() {
-		return modifiedTime;
+	/**
+	 * @param accountNonLocked
+	 *            the accountNonLocked to set
+	 */
+	public void setAccountNonLocked(boolean accountNonLocked) {
+		this.accountNonLocked = accountNonLocked;
 	}
 
-	public synchronized void setModifiedTime(String modifiedTime) {
-		this.modifiedTime = modifiedTime;
+	/**
+	 * @param credentialsNonExpired
+	 *            the credentialsNonExpired to set
+	 */
+	public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+		this.credentialsNonExpired = credentialsNonExpired;
+	}
+
+	/**
+	 * @param createdtime
+	 *            the createdtime to set
+	 */
+	public void setCreatedtime(Date createdtime) {
+		this.createdtime = createdtime;
+	}
+
+	/**
+	 * @param modifiedtime
+	 *            the modifiedtime to set
+	 */
+	public void setModifiedtime(Date modifiedtime) {
+		this.modifiedtime = modifiedtime;
 	}
 
 }

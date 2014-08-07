@@ -1,6 +1,10 @@
 package com.mkyong.users.model;
 
+import java.util.Date;
+
 public class Switch {
+
+	// Variables for corresponding to DB Table
 
 	private String switchid;
 
@@ -22,105 +26,237 @@ public class Switch {
 
 	private int noofegress;
 
-	private String createdtime;
+	private Date createdtime;
 
-	private String modifiedtime;
+	private Date modifiedtime;
 
-	
-	
-	public synchronized String getSwitchid() {
+	// Constructors
+
+	/**
+	 * @param switchid
+	 * @param switchname
+	 * @param switchip
+	 * @param switchport
+	 * @param modelname
+	 * @param modelnumber
+	 * @param serialnumber
+	 * @param totalnoofports
+	 * @param noofingress
+	 * @param noofegress
+	 * @param createdtime
+	 * @param modifiedtime
+	 */
+	public Switch(String switchid, String switchname, String switchip,
+			int switchport, String modelname, String modelnumber,
+			String serialnumber, int totalnoofports, int noofingress,
+			int noofegress, Date createdtime, Date modifiedtime) {
+
+		this.switchid = switchid;
+
+		this.switchname = switchname;
+
+		this.switchip = switchip;
+
+		this.switchport = switchport;
+
+		this.modelname = modelname;
+
+		this.modelnumber = modelnumber;
+
+		this.serialnumber = serialnumber;
+
+		this.totalnoofports = totalnoofports;
+
+		this.noofingress = noofingress;
+
+		this.noofegress = noofegress;
+
+		this.createdtime = createdtime;
+
+		this.modifiedtime = modifiedtime;
+	}
+
+	// Getter Methods
+
+	/**
+	 * @return the switchid
+	 */
+	public String getSwitchid() {
 		return switchid;
 	}
 
-	public synchronized void setSwitchid(String switchid) {
-		this.switchid = switchid;
-	}
-
-	public synchronized String getSwitchname() {
+	/**
+	 * @return the switchname
+	 */
+	public String getSwitchname() {
 		return switchname;
 	}
 
-	public synchronized void setSwitchname(String switchname) {
-		this.switchname = switchname;
-	}
-
-	public synchronized String getSwitchip() {
+	/**
+	 * @return the switchip
+	 */
+	public String getSwitchip() {
 		return switchip;
 	}
 
-	public synchronized void setSwitchip(String switchip) {
-		this.switchip = switchip;
-	}
-
-	public synchronized int getSwitchport() {
+	/**
+	 * @return the switchport
+	 */
+	public int getSwitchport() {
 		return switchport;
 	}
 
-	public synchronized void setSwitchport(int switchport) {
-		this.switchport = switchport;
-	}
-
-	public synchronized String getModelname() {
+	/**
+	 * @return the modelname
+	 */
+	public String getModelname() {
 		return modelname;
 	}
 
-	public synchronized void setModelname(String modelname) {
-		this.modelname = modelname;
-	}
-
-	public synchronized String getModelnumber() {
+	/**
+	 * @return the modelnumber
+	 */
+	public String getModelnumber() {
 		return modelnumber;
 	}
 
-	public synchronized void setModelnumber(String modelnumber) {
-		this.modelnumber = modelnumber;
-	}
-
-	public synchronized String getSerialnumber() {
+	/**
+	 * @return the serialnumber
+	 */
+	public String getSerialnumber() {
 		return serialnumber;
 	}
 
-	public synchronized void setSerialnumber(String serialnumber) {
-		this.serialnumber = serialnumber;
-	}
-
-	public synchronized int getTotalnoofports() {
+	/**
+	 * @return the totalnoofports
+	 */
+	public int getTotalnoofports() {
 		return totalnoofports;
 	}
 
-	public synchronized void setTotalnoofports(int totalnoofports) {
-		this.totalnoofports = totalnoofports;
-	}
-
-	public synchronized int getNoofingress() {
+	/**
+	 * @return the noofingress
+	 */
+	public int getNoofingress() {
 		return noofingress;
 	}
 
-	public synchronized void setNoofingress(int noofingress) {
-		this.noofingress = noofingress;
-	}
-
-	public synchronized int getNoofegress() {
+	/**
+	 * @return the noofegress
+	 */
+	public int getNoofegress() {
 		return noofegress;
 	}
 
-	public synchronized void setNoofegress(int noofegress) {
-		this.noofegress = noofegress;
-	}
-
-	public synchronized String getCreatedtime() {
+	/**
+	 * @return the createdtime
+	 */
+	public Date getCreatedtime() {
 		return createdtime;
 	}
 
-	public synchronized void setCreatedtime(String createdtime) {
-		this.createdtime = createdtime;
-	}
-
-	public synchronized String getModifiedtime() {
+	/**
+	 * @return the modifiedtime
+	 */
+	public Date getModifiedtime() {
 		return modifiedtime;
 	}
 
-	public synchronized void setModifiedtime(String modifiedtime) {
+	// Setter Methods
+
+	/**
+	 * @param switchid
+	 *            the switchid to set
+	 */
+	public void setSwitchid(String switchid) {
+		this.switchid = switchid;
+	}
+
+	/**
+	 * @param switchname
+	 *            the switchname to set
+	 */
+	public void setSwitchname(String switchname) {
+		this.switchname = switchname;
+	}
+
+	/**
+	 * @param switchip
+	 *            the switchip to set
+	 */
+	public void setSwitchip(String switchip) {
+		this.switchip = switchip;
+	}
+
+	/**
+	 * @param switchport
+	 *            the switchport to set
+	 */
+	public void setSwitchport(int switchport) {
+		this.switchport = switchport;
+	}
+
+	/**
+	 * @param modelname
+	 *            the modelname to set
+	 */
+	public void setModelname(String modelname) {
+		this.modelname = modelname;
+	}
+
+	/**
+	 * @param modelnumber
+	 *            the modelnumber to set
+	 */
+	public void setModelnumber(String modelnumber) {
+		this.modelnumber = modelnumber;
+	}
+
+	/**
+	 * @param serialnumber
+	 *            the serialnumber to set
+	 */
+	public void setSerialnumber(String serialnumber) {
+		this.serialnumber = serialnumber;
+	}
+
+	/**
+	 * @param totalnoofports
+	 *            the totalnoofports to set
+	 */
+	public void setTotalnoofports(int totalnoofports) {
+		this.totalnoofports = totalnoofports;
+	}
+
+	/**
+	 * @param noofingress
+	 *            the noofingress to set
+	 */
+	public void setNoofingress(int noofingress) {
+		this.noofingress = noofingress;
+	}
+
+	/**
+	 * @param noofegress
+	 *            the noofegress to set
+	 */
+	public void setNoofegress(int noofegress) {
+		this.noofegress = noofegress;
+	}
+
+	/**
+	 * @param createdtime
+	 *            the createdtime to set
+	 */
+	public void setCreatedtime(Date createdtime) {
+		this.createdtime = createdtime;
+	}
+
+	/**
+	 * @param modifiedtime
+	 *            the modifiedtime to set
+	 */
+	public void setModifiedtime(Date modifiedtime) {
 		this.modifiedtime = modifiedtime;
 	}
 

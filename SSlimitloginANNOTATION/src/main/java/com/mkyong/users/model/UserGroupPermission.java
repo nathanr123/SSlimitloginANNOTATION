@@ -1,5 +1,7 @@
 package com.mkyong.users.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,8 +11,10 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 @Entity
-@Table(name = "rems_user_group_permission", catalog = "rems_db")
+@Table(name = "rems_group_permission", catalog = "rems_db")
 public class UserGroupPermission {
+
+	// Variables for corresponding to DB Table
 
 	private String groupid;
 
@@ -24,81 +28,175 @@ public class UserGroupPermission {
 
 	private int candelete;
 
-	private String createdtime;
+	private Date createdtime;
 
-	private String modifiedtime;
+	private Date modifiedtime;
 
-	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "rems_user_group"))
+	// Constructors
+
+	/**
+	 * @param groupid
+	 * @param component
+	 * @param canread
+	 * @param cancreate
+	 * @param canmodify
+	 * @param candelete
+	 * @param createdtime
+	 * @param modifiedtime
+	 */
+	public UserGroupPermission(String groupid, String component, int canread,
+			int cancreate, int canmodify, int candelete, Date createdtime,
+			Date modifiedtime) {
+
+		this.groupid = groupid;
+
+		this.component = component;
+
+		this.canread = canread;
+
+		this.cancreate = cancreate;
+
+		this.canmodify = canmodify;
+
+		this.candelete = candelete;
+
+		this.createdtime = createdtime;
+
+		this.modifiedtime = modifiedtime;
+	}
+
+	// Getter Methods
+
+	/**
+	 * @return the groupid
+	 */
+
+	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "rems_group"))
 	@GeneratedValue(generator = "generator")
-	@Column(name = "", nullable = false, length = 10)
-	public synchronized String getGroupid() {
+	@Column(name = "groupid", unique = true, nullable = false, length = 10)
+	public String getGroupid() {
 		return groupid;
 	}
 
-	public synchronized void setGroupid(String groupid) {
-		this.groupid = groupid;
-	}
-
-	@Column(name = "", nullable = false, length = 10)
-	public synchronized String getComponent() {
+	/**
+	 * @return the component
+	 */
+	@Column(name = "component", nullable = false, length = 35)
+	public String getComponent() {
 		return component;
 	}
 
-	public synchronized void setComponent(String component) {
-		this.component = component;
-	}
-
+	/**
+	 * @return the canread
+	 */
 	@Column(name = "canread", nullable = false)
-	public synchronized int getCanread() {
+	public int getCanread() {
 		return canread;
 	}
 
-	public synchronized void setCanread(int canread) {
-		this.canread = canread;
-	}
-
+	/**
+	 * @return the cancreate
+	 */
 	@Column(name = "cancreate", nullable = false)
-	public synchronized int getCancreate() {
+	public int getCancreate() {
 		return cancreate;
 	}
 
-	public synchronized void setCancreate(int cancreate) {
-		this.cancreate = cancreate;
-	}
-
+	/**
+	 * @return the canmodify
+	 */
 	@Column(name = "canmodify", nullable = false)
-	public synchronized int getCanmodify() {
+	public int getCanmodify() {
 		return canmodify;
 	}
 
-	public synchronized void setCanmodify(int canmodify) {
-		this.canmodify = canmodify;
-	}
-
+	/**
+	 * @return the candelete
+	 */
 	@Column(name = "candelete", nullable = false)
-	public synchronized int getCandelete() {
+	public int getCandelete() {
 		return candelete;
 	}
 
-	public synchronized void setCandelete(int candelete) {
-		this.candelete = candelete;
-	}
-
+	/**
+	 * @return the createdtime
+	 */
 	@Column(name = "createdtime", nullable = false)
-	public synchronized String getCreatedtime() {
+	public Date getCreatedtime() {
 		return createdtime;
 	}
 
-	public synchronized void setCreatedtime(String createdtime) {
-		this.createdtime = createdtime;
-	}
-
+	/**
+	 * @return the modifiedtime
+	 */
 	@Column(name = "modifiedtime", nullable = false)
-	public synchronized String getModifiedtime() {
+	public Date getModifiedtime() {
 		return modifiedtime;
 	}
 
-	public synchronized void setModifiedtime(String modifiedtime) {
+	// Setter Methods
+
+	/**
+	 * @param groupid
+	 *            the groupid to set
+	 */
+	public void setGroupid(String groupid) {
+		this.groupid = groupid;
+	}
+
+	/**
+	 * @param component
+	 *            the component to set
+	 */
+	public void setComponent(String component) {
+		this.component = component;
+	}
+
+	/**
+	 * @param canread
+	 *            the canread to set
+	 */
+	public void setCanread(int canread) {
+		this.canread = canread;
+	}
+
+	/**
+	 * @param cancreate
+	 *            the cancreate to set
+	 */
+	public void setCancreate(int cancreate) {
+		this.cancreate = cancreate;
+	}
+
+	/**
+	 * @param canmodify
+	 *            the canmodify to set
+	 */
+	public void setCanmodify(int canmodify) {
+		this.canmodify = canmodify;
+	}
+
+	/**
+	 * @param candelete
+	 *            the candelete to set
+	 */
+	public void setCandelete(int candelete) {
+		this.candelete = candelete;
+	}
+
+	/**
+	 * @param createdtime
+	 *            the createdtime to set
+	 */
+	public void setCreatedtime(Date createdtime) {
+		this.createdtime = createdtime;
+	}
+
+	/**
+	 * @param modifiedtime
+	 *            the modifiedtime to set
+	 */
+	public void setModifiedtime(Date modifiedtime) {
 		this.modifiedtime = modifiedtime;
 	}
 

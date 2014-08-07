@@ -81,8 +81,8 @@ public class UserDetailsDaoImpl extends JdbcDaoSupport implements
 							UserAttempts user = new UserAttempts();
 							user.setUsername(rs.getString("username"));
 							user.setNofattempts(rs.getInt("nofattempts"));
-							user.setCreatedtime(rs.getString("createdtime"));
-							user.setModifiedtime(rs.getString("modifiedtime"));
+							user.setCreatedtime(rs.getDate("createdtime"));
+							user.setModifiedtime(rs.getDate("modifiedtime"));
 
 							return user;
 						}
