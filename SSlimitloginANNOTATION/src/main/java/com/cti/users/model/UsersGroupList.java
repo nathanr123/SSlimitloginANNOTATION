@@ -1,4 +1,7 @@
-package com.mkyong.users.model;
+/**
+ * 
+ */
+package com.cti.users.model;
 
 import java.util.Date;
 
@@ -11,15 +14,19 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
+/**
+ * @author nathanr_kamal
+ *
+ */
 @Entity
-@Table(name = "rems_user_attempts", catalog = "rems_db")
-public class UserAttempts {
+@Table(name = "rems_users_grouplist", catalog = "rems_db")
+public class UsersGroupList {
 
 	// Variables for corresponding to DB Table
 
 	private String username;
 
-	private int nofattempts;
+	private String groupid;
 
 	private Date createdtime;
 
@@ -28,23 +35,17 @@ public class UserAttempts {
 	// Constructors
 
 	/**
-	 * 
-	 */
-	public UserAttempts() {
-	}
-
-	/**
 	 * @param username
-	 * @param nofattempts
+	 * @param groupid
 	 * @param createdtime
 	 * @param modifiedtime
 	 */
-	public UserAttempts(String username, int nofattempts, Date createdtime,
+	public UsersGroupList(String username, String groupid, Date createdtime,
 			Date modifiedtime) {
 
 		this.username = username;
 
-		this.nofattempts = nofattempts;
+		this.groupid = groupid;
 
 		this.createdtime = createdtime;
 
@@ -56,9 +57,7 @@ public class UserAttempts {
 	/**
 	 * @return the username
 	 */
-
 	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "rems_user"))
-	@Id
 	@GeneratedValue(generator = "generator")
 	@Column(name = "username", unique = true, nullable = false, length = 16)
 	public String getUsername() {
@@ -66,11 +65,13 @@ public class UserAttempts {
 	}
 
 	/**
-	 * @return the nofattempts
+	 * @return the groupid
 	 */
-	@Column(name = "nofattempts", nullable = false)
-	public int getNofattempts() {
-		return nofattempts;
+	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "rems_group"))
+	@GeneratedValue(generator = "generator")
+	@Column(name = "groupid", unique = true, nullable = false, length = 10)
+	public String getGroupid() {
+		return groupid;
 	}
 
 	/**
@@ -100,11 +101,11 @@ public class UserAttempts {
 	}
 
 	/**
-	 * @param nofattempts
-	 *            the nofattempts to set
+	 * @param groupid
+	 *            the groupid to set
 	 */
-	public void setNofattempts(int nofattempts) {
-		this.nofattempts = nofattempts;
+	public void setGroupid(String groupid) {
+		this.groupid = groupid;
 	}
 
 	/**

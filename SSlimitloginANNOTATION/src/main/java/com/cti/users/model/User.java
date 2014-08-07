@@ -1,4 +1,4 @@
-package com.mkyong.users.model;
+package com.cti.users.model;
 
 import java.util.Date;
 

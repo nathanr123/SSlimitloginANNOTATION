@@ -1,4 +1,4 @@
-package com.mkyong.web.handler;
+package com.cti.web.handler;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,8 +10,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
-import com.mkyong.users.dao.UserDetailsDao;
-import com.mkyong.users.model.UserAttempts;
+import com.cti.users.dao.UserDetailsDao;
+import com.cti.users.model.UserAttempts;
 
 @Component("authenticationProvider")
 public class LimitLoginAuthenticationProvider extends DaoAuthenticationProvider {

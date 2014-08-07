@@ -3,12 +3,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.mkyong</groupId>
-	<artifactId>spring-security-limit-login-annotation</artifactId>
+	<groupId>com.cti</groupId>
+	<artifactId>rems</artifactId>
 	<packaging>war</packaging>
-	<version>1.0-SNAPSHOT</version>
-	<name>SpringSecurity Limit Login Attemps</name>
-	<url>http://www.mkyong.com/tutorials/spring-security-tutorials/</url>
+	<version>1.0 ALPHA</version>
+	<name>rems</name>
+	<url>http://www.cornetindia.com</url>
 
 	<properties>
 		<java-version>1.8</java-version>
@@ -222,7 +222,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>SpringSecurity</finalName>
+		<finalName>REMS</finalName>
 		<plugins>
 
 			<plugin>
@@ -249,4 +249,8 @@
 		</plugins>
 	</build>
 
+	<organization>
+		<name>Cornet Technology (India) Pvt Ltd</name>
+		<url>http://www.cornetindia.com</url>
+	</organization>
 </project>

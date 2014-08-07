@@ -1,4 +1,4 @@
-package com.mkyong.users.dao;
+package com.cti.users.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,7 +14,7 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.stereotype.Repository;
 
-import com.mkyong.users.model.UserAttempts;
+import com.cti.users.model.UserAttempts;
 
 @Repository
 public class UserDetailsDaoImpl extends JdbcDaoSupport implements
