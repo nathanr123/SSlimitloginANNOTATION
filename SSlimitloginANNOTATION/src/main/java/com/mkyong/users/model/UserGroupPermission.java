@@ -1,5 +1,15 @@
 package com.mkyong.users.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+
+@Entity
+@Table(name = "rems_user_group_permission", catalog = "rems_db")
 public class UserGroupPermission {
 
 	private String groupid;
@@ -18,8 +28,9 @@ public class UserGroupPermission {
 
 	private String modifiedtime;
 
-	
-	
+	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "rems_user_group"))
+	@GeneratedValue(generator = "generator")
+	@Column(name = "", nullable = false, length = 10)
 	public synchronized String getGroupid() {
 		return groupid;
 	}
@@ -28,6 +39,7 @@ public class UserGroupPermission {
 		this.groupid = groupid;
 	}
 
+	@Column(name = "", nullable = false, length = 10)
 	public synchronized String getComponent() {
 		return component;
 	}
@@ -36,6 +48,7 @@ public class UserGroupPermission {
 		this.component = component;
 	}
 
+	@Column(name = "canread", nullable = false)
 	public synchronized int getCanread() {
 		return canread;
 	}
@@ -44,6 +57,7 @@ public class UserGroupPermission {
 		this.canread = canread;
 	}
 
+	@Column(name = "cancreate", nullable = false)
 	public synchronized int getCancreate() {
 		return cancreate;
 	}
@@ -52,6 +66,7 @@ public class UserGroupPermission {
 		this.cancreate = cancreate;
 	}
 
+	@Column(name = "canmodify", nullable = false)
 	public synchronized int getCanmodify() {
 		return canmodify;
 	}
@@ -60,6 +75,7 @@ public class UserGroupPermission {
 		this.canmodify = canmodify;
 	}
 
+	@Column(name = "candelete", nullable = false)
 	public synchronized int getCandelete() {
 		return candelete;
 	}
@@ -68,6 +84,7 @@ public class UserGroupPermission {
 		this.candelete = candelete;
 	}
 
+	@Column(name = "createdtime", nullable = false)
 	public synchronized String getCreatedtime() {
 		return createdtime;
 	}
@@ -76,6 +93,7 @@ public class UserGroupPermission {
 		this.createdtime = createdtime;
 	}
 
+	@Column(name = "modifiedtime", nullable = false)
 	public synchronized String getModifiedtime() {
 		return modifiedtime;
 	}
