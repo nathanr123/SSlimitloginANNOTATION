@@ -1,4 +1,4 @@
-package com.cti.web.controller;
+package com.cti.controller;
 
 import javax.servlet.http.HttpServletRequest;
 

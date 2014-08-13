@@ -1,4 +1,4 @@
-package com.cti.users.model;
+package com.cti.model;
 
 import java.util.Date;
 

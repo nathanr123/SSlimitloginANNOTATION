@@ -1,4 +1,4 @@
-package com.cti.group.model;
+package com.cti.model;
 
 import java.util.Date;
 

@@ -1,4 +1,4 @@
-package com.cti.users.dao;
+package com.cti.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,20 +14,20 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.stereotype.Repository;
 
-import com.cti.users.model.UserAttempts;
+import com.cti.model.UserAttempts;
 
 @Repository
 public class UserDetailsDaoImpl extends JdbcDaoSupport implements
 		UserDetailsDao {
 
-	private static final String SQL_USERS_UPDATE_LOCKED = "UPDATE USERS SET accountNonLocked = ? WHERE username = ?";
-	private static final String SQL_USERS_COUNT = "SELECT count(*) FROM USERS WHERE username = ?";
+	private static final String SQL_USERS_UPDATE_LOCKED = "UPDATE rems_user SET accountNonLocked = ? WHERE username = ?";
+	private static final String SQL_USERS_COUNT = "SELECT count(*) FROM rems_user WHERE username = ?";
 
-	private static final String SQL_USER_ATTEMPTS_GET = "SELECT * FROM USER_ATTEMPTS WHERE username = ?";
-	private static final String SQL_USER_ATTEMPTS_INSERT = "INSERT INTO USER_ATTEMPTS (USERNAME, ATTEMPTS, LASTMODIFIED) VALUES(?,?,?)";
+	private static final String SQL_USER_ATTEMPTS_GET = "SELECT * FROM rems_user_attempts WHERE username = ?";
+	private static final String SQL_USER_ATTEMPTS_INSERT = "INSERT INTO rems_user_attempts (username, nofattempts, modifiedtime) VALUES(?,?,?)";
 
-	private static final String SQL_USER_ATTEMPTS_UPDATE_ATTEMPTS = "UPDATE USER_ATTEMPTS SET attempts = attempts + 1, lastmodified = ? WHERE username = ?";
-	private static final String SQL_USER_ATTEMPTS_RESET_ATTEMPTS = "UPDATE USER_ATTEMPTS SET attempts = 0, lastmodified = null WHERE username = ?";
+	private static final String SQL_USER_ATTEMPTS_UPDATE_ATTEMPTS = "UPDATE rems_user_attempts SET nofattempts = nofattempts + 1, modifiedtime = ? WHERE username = ?";
+	private static final String SQL_USER_ATTEMPTS_RESET_ATTEMPTS = "UPDATE rems_user_attempts SET nofattempts = 0, modifiedtime = NOW() WHERE username = ?";
 
 	private static final int MAX_ATTEMPTS = 3;
 

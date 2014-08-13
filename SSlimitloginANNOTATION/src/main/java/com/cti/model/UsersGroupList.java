@@ -1,4 +1,7 @@
-package com.cti.users.model;
+/**
+ * 
+ */
+package com.cti.model;
 
 import java.util.Date;
 
@@ -11,19 +14,19 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
+/**
+ * @author nathanr_kamal
+ *
+ */
 @Entity
-@Table(name = "rems_user_detail", catalog = "rems_db")
-public class UserDetail {
+@Table(name = "rems_users_grouplist", catalog = "rems_db")
+public class UsersGroupList {
 
 	// Variables for corresponding to DB Table
 
 	private String username;
 
-	private String fullname;
-
-	private String mailid;
-
-	private String mobileno;
+	private String groupid;
 
 	private Date createdtime;
 
@@ -31,28 +34,18 @@ public class UserDetail {
 
 	// Constructors
 
-	public UserDetail() {
-
-	}
-
 	/**
 	 * @param username
-	 * @param fullname
-	 * @param mailid
-	 * @param mobileno
+	 * @param groupid
 	 * @param createdtime
 	 * @param modifiedtime
 	 */
-	public UserDetail(String username, String fullname, String mailid,
-			String mobileno, Date createdtime, Date modifiedtime) {
+	public UsersGroupList(String username, String groupid, Date createdtime,
+			Date modifiedtime) {
 
 		this.username = username;
 
-		this.fullname = fullname;
-
-		this.mailid = mailid;
-
-		this.mobileno = mobileno;
+		this.groupid = groupid;
 
 		this.createdtime = createdtime;
 
@@ -65,7 +58,6 @@ public class UserDetail {
 	 * @return the username
 	 */
 	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "rems_user"))
-	@Id
 	@GeneratedValue(generator = "generator")
 	@Column(name = "username", unique = true, nullable = false, length = 16)
 	public String getUsername() {
@@ -73,27 +65,13 @@ public class UserDetail {
 	}
 
 	/**
-	 * @return the fullname
+	 * @return the groupid
 	 */
-	@Column(name = "fullname", nullable = false, length = 35)
-	public String getFullname() {
-		return fullname;
-	}
-
-	/**
-	 * @return the mailid
-	 */
-	@Column(name = "mailid", nullable = false, length = 124)
-	public String getMailid() {
-		return mailid;
-	}
-
-	/**
-	 * @return the mobileno
-	 */
-	@Column(name = "mobileno", nullable = false, length = 15)
-	public String getMobileno() {
-		return mobileno;
+	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "rems_group"))
+	@GeneratedValue(generator = "generator")
+	@Column(name = "groupid", unique = true, nullable = false, length = 10)
+	public String getGroupid() {
+		return groupid;
 	}
 
 	/**
@@ -123,27 +101,11 @@ public class UserDetail {
 	}
 
 	/**
-	 * @param fullname
-	 *            the fullname to set
+	 * @param groupid
+	 *            the groupid to set
 	 */
-	public void setFullname(String fullname) {
-		this.fullname = fullname;
-	}
-
-	/**
-	 * @param mailid
-	 *            the mailid to set
-	 */
-	public void setMailid(String mailid) {
-		this.mailid = mailid;
-	}
-
-	/**
-	 * @param mobileno
-	 *            the mobileno to set
-	 */
-	public void setMobileno(String mobileno) {
-		this.mobileno = mobileno;
+	public void setGroupid(String groupid) {
+		this.groupid = groupid;
 	}
 
 	/**

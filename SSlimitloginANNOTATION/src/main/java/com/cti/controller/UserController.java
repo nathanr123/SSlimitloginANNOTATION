@@ -1,4 +1,4 @@
-package com.cti.web.controller;
+package com.cti.controller;
 
 import java.util.Map;
 
@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.cti.users.model.User;
-import com.cti.users.model.UserDetail;
+import com.cti.model.User;
+import com.cti.model.UserDetail;
 
 @Controller
 @EnableWebMvcSecurity

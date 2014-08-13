@@ -1,4 +1,4 @@
-package com.cti.users.model;
+package com.cti.model;
 
 import java.util.Date;
 
@@ -12,14 +12,18 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 @Entity
-@Table(name = "rems_user_attempts", catalog = "rems_db")
-public class UserAttempts {
+@Table(name = "rems_user_detail", catalog = "rems_db")
+public class UserDetail {
 
 	// Variables for corresponding to DB Table
 
 	private String username;
 
-	private int nofattempts;
+	private String fullname;
+
+	private String mailid;
+
+	private String mobileno;
 
 	private Date createdtime;
 
@@ -27,24 +31,28 @@ public class UserAttempts {
 
 	// Constructors
 
-	/**
-	 * 
-	 */
-	public UserAttempts() {
+	public UserDetail() {
+
 	}
 
 	/**
 	 * @param username
-	 * @param nofattempts
+	 * @param fullname
+	 * @param mailid
+	 * @param mobileno
 	 * @param createdtime
 	 * @param modifiedtime
 	 */
-	public UserAttempts(String username, int nofattempts, Date createdtime,
-			Date modifiedtime) {
+	public UserDetail(String username, String fullname, String mailid,
+			String mobileno, Date createdtime, Date modifiedtime) {
 
 		this.username = username;
 
-		this.nofattempts = nofattempts;
+		this.fullname = fullname;
+
+		this.mailid = mailid;
+
+		this.mobileno = mobileno;
 
 		this.createdtime = createdtime;
 
@@ -56,7 +64,6 @@ public class UserAttempts {
 	/**
 	 * @return the username
 	 */
-
 	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "rems_user"))
 	@Id
 	@GeneratedValue(generator = "generator")
@@ -66,11 +73,27 @@ public class UserAttempts {
 	}
 
 	/**
-	 * @return the nofattempts
+	 * @return the fullname
 	 */
-	@Column(name = "nofattempts", nullable = false)
-	public int getNofattempts() {
-		return nofattempts;
+	@Column(name = "fullname", nullable = false, length = 35)
+	public String getFullname() {
+		return fullname;
+	}
+
+	/**
+	 * @return the mailid
+	 */
+	@Column(name = "mailid", nullable = false, length = 124)
+	public String getMailid() {
+		return mailid;
+	}
+
+	/**
+	 * @return the mobileno
+	 */
+	@Column(name = "mobileno", nullable = false, length = 15)
+	public String getMobileno() {
+		return mobileno;
 	}
 
 	/**
@@ -100,11 +123,27 @@ public class UserAttempts {
 	}
 
 	/**
-	 * @param nofattempts
-	 *            the nofattempts to set
+	 * @param fullname
+	 *            the fullname to set
 	 */
-	public void setNofattempts(int nofattempts) {
-		this.nofattempts = nofattempts;
+	public void setFullname(String fullname) {
+		this.fullname = fullname;
+	}
+
+	/**
+	 * @param mailid
+	 *            the mailid to set
+	 */
+	public void setMailid(String mailid) {
+		this.mailid = mailid;
+	}
+
+	/**
+	 * @param mobileno
+	 *            the mobileno to set
+	 */
+	public void setMobileno(String mobileno) {
+		this.mobileno = mobileno;
 	}
 
 	/**
