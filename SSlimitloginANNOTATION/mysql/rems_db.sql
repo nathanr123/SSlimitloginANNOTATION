@@ -1,6 +1,6 @@
 /*
 SQLyog Ultimate v8.5 
-MySQL - 5.1.23-rc-community : Database - rems_db
+MySQL - 5.5.28 : Database - rems_db
 *********************************************************************
 */
 
@@ -28,8 +28,7 @@ CREATE TABLE `rems_group` (
   `createdtime` datetime NOT NULL,
   `modifiedtime` datetime NOT NULL,
   PRIMARY KEY (`groupid`),
-  KEY `rems_group_ibfk_1` (`roleid`),
-  CONSTRAINT `rems_group_ibfk_1` FOREIGN KEY (`roleid`) REFERENCES `rems_user_role` (`roleid`)
+  KEY `rems_group_ibfk_1` (`roleid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `rems_group` */
@@ -129,6 +128,7 @@ CREATE TABLE `rems_user` (
   `username` varchar(16) NOT NULL,
   `password` varchar(16) NOT NULL,
   `priority` smallint(6) DEFAULT NULL,
+  `userrole` varchar(20) DEFAULT 'ROLE_ADMIN',
   `enabled` tinyint(1) NOT NULL DEFAULT '1',
   `accountNonExpired` tinyint(1) NOT NULL DEFAULT '1',
   `accountNonLocked` tinyint(1) NOT NULL DEFAULT '1',
@@ -140,7 +140,7 @@ CREATE TABLE `rems_user` (
 
 /*Data for the table `rems_user` */
 
-insert  into `rems_user`(`username`,`password`,`priority`,`enabled`,`accountNonExpired`,`accountNonLocked`,`credentialsNonExpired`,`createdtime`,`modifiedtime`) values ('admin','admin',9,1,1,0,1,'2014-08-06 14:47:14','2014-08-06 14:47:14'),('guest','guest',1,1,1,1,1,'2014-08-06 14:47:14','2014-08-06 14:47:14'),('operator','operator',10,1,1,1,1,'2014-08-06 14:47:14','2014-08-06 14:47:14'),('superadmin','superadmin',10,1,1,1,1,'2014-08-06 14:47:00','2014-08-06 14:47:00'),('technician','technician',8,1,1,1,1,'2014-08-06 14:47:14','2014-08-06 14:47:14');
+insert  into `rems_user`(`username`,`password`,`priority`,`userrole`,`enabled`,`accountNonExpired`,`accountNonLocked`,`credentialsNonExpired`,`createdtime`,`modifiedtime`) values ('admin','admin',9,'ROLE_ADMIN',1,1,1,1,'2014-08-06 14:47:14','2014-08-06 14:47:14'),('guest','guest',1,'ROLE_ADMIN',1,1,1,1,'2014-08-06 14:47:14','2014-08-06 14:47:14'),('operator','operator',10,'ROLE_ADMIN',1,1,1,1,'2014-08-06 14:47:14','2014-08-06 14:47:14'),('superadmin','superadmin',10,'ROLE_ADMIN',1,1,1,1,'2014-08-06 14:47:00','2014-08-06 14:47:00'),('technician','technician',8,'ROLE_ADMIN',1,1,1,1,'2014-08-06 14:47:14','2014-08-06 14:47:14');
 
 /*Table structure for table `rems_user_attempts` */
 
@@ -156,8 +156,6 @@ CREATE TABLE `rems_user_attempts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `rems_user_attempts` */
-
-insert  into `rems_user_attempts`(`username`,`nofattempts`,`createdtime`,`modifiedtime`) values ('admin',3,'2014-08-06 14:53:24','2014-08-13 23:05:11');
 
 /*Table structure for table `rems_user_detail` */
 
@@ -178,22 +176,6 @@ CREATE TABLE `rems_user_detail` (
 
 insert  into `rems_user_detail`(`username`,`fullname`,`mailid`,`mobilenumber`,`createdtime`,`modifiedtime`) values ('admin','KAMALANATHAN','nathanr.kamal@gmail.com','8939258346','2014-08-06 14:50:56','2014-08-06 14:50:56');
 
-/*Table structure for table `rems_user_role` */
-
-DROP TABLE IF EXISTS `rems_user_role`;
-
-CREATE TABLE `rems_user_role` (
-  `roleid` varchar(35) NOT NULL,
-  `roletype` varchar(35) NOT NULL DEFAULT 'ROLE_USER',
-  `createdtime` datetime NOT NULL,
-  `modifiedtime` datetime NOT NULL,
-  PRIMARY KEY (`roleid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-/*Data for the table `rems_user_role` */
-
-insert  into `rems_user_role`(`roleid`,`roletype`,`createdtime`,`modifiedtime`) values ('ADMIN','ROLE_USER','2014-08-06 14:18:29','2014-08-06 14:18:29'),('GUEST','ROLE_USER','2014-08-06 14:18:30','2014-08-06 14:18:30'),('OPERATOR','ROLE_USER','2014-08-06 14:18:30','2014-08-06 14:18:30'),('SUPERADMIN','ROLE_ADMIN','2014-08-06 14:18:29','2014-08-06 14:18:29'),('TECHNICIAN','ROLE_USER','2014-08-06 14:18:29','2014-08-06 14:18:29');
-
 /*Table structure for table `rems_users_grouplist` */
 
 DROP TABLE IF EXISTS `rems_users_grouplist`;
@@ -212,23 +194,6 @@ CREATE TABLE `rems_users_grouplist` (
 /*Data for the table `rems_users_grouplist` */
 
 insert  into `rems_users_grouplist`(`username`,`groupid`,`createdtime`,`modifiedtime`) values ('superadmin','GRP0001','2014-08-07 18:30:36','2014-08-07 18:30:36'),('admin','GRP0002','2014-08-07 18:30:36','2014-08-07 18:30:36');
-
-/*Table structure for table `user_roles` */
-
-DROP TABLE IF EXISTS `user_roles`;
-
-CREATE TABLE `user_roles` (
-  `user_role_id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(45) NOT NULL,
-  `ROLE` varchar(45) NOT NULL,
-  PRIMARY KEY (`user_role_id`),
-  UNIQUE KEY `uni_username_role` (`ROLE`,`username`),
-  KEY `fk_username_idx` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
-/*Data for the table `user_roles` */
-
-insert  into `user_roles`(`user_role_id`,`username`,`ROLE`) values (1,'admin','ROLE_USER'),(2,'superadmin','ROLE_ADMIN');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

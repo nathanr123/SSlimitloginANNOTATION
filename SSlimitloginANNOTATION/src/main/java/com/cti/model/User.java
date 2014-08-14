@@ -18,6 +18,8 @@ public class User {
 	private String password;
 
 	private int priority;
+	
+	private String userrole;
 
 	private boolean enabled;
 
@@ -39,39 +41,26 @@ public class User {
 	public User() {
 	}
 
-	/**
-	 * @param username
-	 * @param password
-	 * @param priority
-	 * @param enabled
-	 * @param accountNonExpired
-	 * @param accountNonLocked
-	 * @param credentialsNonExpired
-	 * @param createdtime
-	 * @param modifiedtime
-	 */
+	
+
 	public User(String username, String password, int priority,
-			boolean enabled, boolean accountNonExpired,
+			String userrole, boolean enabled, boolean accountNonExpired,
 			boolean accountNonLocked, boolean credentialsNonExpired,
 			Date createdtime, Date modifiedtime) {
-
+		super();
 		this.username = username;
-
 		this.password = password;
-
 		this.priority = priority;
-
+		this.userrole = userrole;
 		this.enabled = enabled;
-
 		this.accountNonExpired = accountNonExpired;
-
 		this.accountNonLocked = accountNonLocked;
-
 		this.credentialsNonExpired = credentialsNonExpired;
-
 		this.createdtime = createdtime;
 		this.modifiedtime = modifiedtime;
 	}
+
+
 
 	// Getter Methods
 
@@ -99,6 +88,15 @@ public class User {
 	public int getPriority() {
 		return priority;
 	}
+
+	/**
+	 * @return the userrole
+	 */
+	public String getUserrole() {
+		return userrole;
+	}
+
+
 
 	/**
 	 * @return the enabled
@@ -147,6 +145,8 @@ public class User {
 	public Date getModifiedtime() {
 		return modifiedtime;
 	}
+	
+	
 
 	// Setter Methods
 
@@ -173,6 +173,15 @@ public class User {
 	public void setPriority(int priority) {
 		this.priority = priority;
 	}
+
+	/**
+	 * @param userrole the userrole to set
+	 */
+	public void setUserrole(String userrole) {
+		this.userrole = userrole;
+	}
+
+
 
 	/**
 	 * @param enabled

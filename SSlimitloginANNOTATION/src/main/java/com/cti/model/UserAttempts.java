@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
-
+//kkrs
 @Entity
 @Table(name = "rems_user_attempts", catalog = "rems_db")
 public class UserAttempts {
@@ -59,7 +59,6 @@ public class UserAttempts {
 
 	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "rems_user"))
 	@Id
-	@GeneratedValue(generator = "generator")
 	@Column(name = "username", unique = true, nullable = false, length = 16)
 	public String getUsername() {
 		return username;
