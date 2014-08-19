@@ -25,7 +25,8 @@
 			<h2>
 				User : ${pageContext.request.userPrincipal.name} | <a
 					href="javascript:formSubmit()"> Logout</a> | <a
-					href="${contextPath}/newuser">Create New User</a>
+					href="${contextPath}/newuser">Create New User</a>| <a
+					href="${contextPath}/listusers">List User</a>
 			</h2>
 		</c:if>
 

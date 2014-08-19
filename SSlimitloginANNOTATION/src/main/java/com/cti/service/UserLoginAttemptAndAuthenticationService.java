@@ -25,8 +25,8 @@ import org.springframework.stereotype.Service;
  * @author mkyong
  * 
  */
-@Service("userDetailsService")
-public class CustomUserDetailsService extends JdbcDaoImpl {
+@Service("userLoginAttemptAndAuthenticationService")
+public class UserLoginAttemptAndAuthenticationService extends JdbcDaoImpl {
 
 	@Autowired
 	private DataSource dataSource;

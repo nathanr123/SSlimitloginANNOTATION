@@ -1,6 +1,9 @@
 package com.cti.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cti.model.User;
 import com.cti.model.UserDetail;
+import com.cti.service.UserDetailsService;
 //import com.cti.model.UserDetail;
 import com.cti.service.UserService;
 
@@ -22,23 +26,17 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
+	@Autowired
+	UserDetailsService userDetailService;
 
 	@RequestMapping(value = "/newuser", method = RequestMethod.GET)
 	public ModelAndView goToNewUserRegistration(Map<String, Object> model) {
-
-		String userid = "1234565";
-
-		String role = "ROLE_USER";
 
 		User userForm = new User();
 
 		model.put("userForm", userForm);
 
 		ModelAndView mav = new ModelAndView();
-
-		mav.addObject("userid", userid);
-
-		mav.addObject("role", role);
 
 		mav.setViewName("user");
 
@@ -53,20 +51,6 @@ public class UserController {
 
 		user.setPassword(user.getPassword().split(",")[0]);
 
-		System.out.println("User Name : " + user.getUsername());
-
-		System.out.println("Password : " + user.getPassword());
-
-		System.out.println("Is Account Enabled : " + user.isEnabled());
-
-		System.out
-				.println("Is Account Expired : " + user.isAccountNonExpired());
-
-		System.out.println("Is Account Locked : " + user.isAccountNonLocked());
-
-		System.out.println("Is Credentials Expired : "
-				+ user.isCredentialsNonExpired());
-
 		user.setCreatedtime(d);
 
 		user.setModifiedtime(d);
@@ -74,9 +58,6 @@ public class UserController {
 		user.setUserrole("ROLE_ADMIN");
 
 		userService.saveUser(user);
-
-		System.out.println("New User Saved " + user.getUsername()
-				+ " Successfully");
 
 		UserDetail userdetailForm = new UserDetail();
 
@@ -86,7 +67,7 @@ public class UserController {
 
 		ModelAndView mav = new ModelAndView();
 
-		mav.addObject("msg", "New User" + user.getUsername()
+		mav.addObject("msg", "New User " + user.getUsername()
 				+ " Created Successfully");
 
 		mav.setViewName("userdetail");
@@ -96,27 +77,79 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/updateuserdetail", method = RequestMethod.POST)
-	public ModelAndView updateUserProfile(
+	public String updateUserProfile(
 			@ModelAttribute("userdetailForm") UserDetail userDetail,
 			Map<String, Object> model) {
 
-		System.out.println("User Name : " + userDetail.getUsername());
+		Date d = new Date();
 
-		System.out.println("Name : " + userDetail.getFullname());
+		userDetail.setCreatedtime(d);
 
-		System.out.println("Mail ID : " + userDetail.getMailid());
+		userDetail.setModifiedtime(d);
 
-		System.out.println("Mobile Number : " + userDetail.getMobileno());
+		userDetailService.saveUserDetail(userDetail);
 
-		ModelAndView mav = new ModelAndView();
+		/*ModelAndView mav = new ModelAndView();
+
+		mav.addObject("userlist", getAllUsersDetail());
 
 		mav.addObject("msg", userDetail.getUsername()
 				+ " Profile updated Successfully !!!!!");
 
 		mav.setViewName("listuser");
 
+		return mav;*/
+		
+		return "forward:/listusers";
+
+	}
+	
+	@RequestMapping(value = "/listusers", method = RequestMethod.GET)
+	public ModelAndView listUsers() {
+
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("userlist", getAllUsersDetail());
+
+		/*mav.addObject("msg", userDetail.getUsername()
+				+ " Profile updated Successfully !!!!!");*/
+
+		mav.setViewName("listuser");
+
 		return mav;
 
+	}
+
+	private List<UserDetail> getAllUsersDetail() {
+		List<UserDetail> userDetailList = new ArrayList<UserDetail>();
+
+		List<User> users = userService.listUsers();
+
+		UserDetail ud = null;
+
+		for (Iterator<User> iterator = users.iterator(); iterator.hasNext();) {
+
+			User user = iterator.next();
+
+			ud = getUserDetail(user.getUsername());
+
+			if (ud == null) {
+				ud = new UserDetail();
+				
+				ud.setUsername(user.getUsername());
+
+				ud.setCreatedtime(user.getCreatedtime());
+
+				ud.setModifiedtime(user.getModifiedtime());
+			}
+			userDetailList.add(ud);
+		}
+
+		return userDetailList;
+	}
+
+	private UserDetail getUserDetail(String username) {
+		return userDetailService.getUserDetailById(username);
 	}
 
 }

@@ -19,7 +19,7 @@ import com.cti.model.UserGroup;
  *
  */
 @Repository
-public class GroupDAOImpl implements GroupDAO {
+public class GroupDAOEx implements GroupDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;

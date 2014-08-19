@@ -16,7 +16,7 @@ import com.cti.model.UsersGroupList;
  *
  */
 @Service
-public class UserGroupListServiceImpl implements UserGroupListService {
+public class UserGroupListServiceEx implements UserGroupListService {
 
 	@Autowired
 	UserGroupListDAO userGroupListDAO; 

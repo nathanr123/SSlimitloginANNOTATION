@@ -16,7 +16,7 @@ import com.cti.model.User;
  *
  */
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceEx implements UserService {
 
 	@Autowired
 	UserDAO userDAO;
@@ -71,6 +71,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> listUsers() {
 		return userDAO.listUsers();
+	}
+
+	@Override
+	public void updatePassword(User user) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

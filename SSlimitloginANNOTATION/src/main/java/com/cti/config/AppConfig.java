@@ -27,29 +27,41 @@ import org.springframework.web.servlet.view.JstlView;
 @PropertySource("classpath:application.properties")
 @Import({ SecurityConfig.class })
 public class AppConfig {
-	
-	private static final String PROPERTY_NAME_ENTITYMANAGER_PACKAGES_TO_SCAN =  "com.cti.model";
 
-	//private static final String PROPERTY_NAME_HIBERNATE_DDL_MODE = "hibernate.hbm2ddl.auto";
+	private static final String PROPERTY_NAME_ENTITYMANAGER_PACKAGES_TO_SCAN = "com.cti.model";
+
+	// private static final String PROPERTY_NAME_HIBERNATE_DDL_MODE =
+	// "hibernate.hbm2ddl.auto";
 
 	@Resource
 	private Environment env;
 
 	@Bean(name = "dataSource")
 	public DriverManagerDataSource dataSource() {
-	    DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
-	    driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-	    driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/rems_db");
-	    driverManagerDataSource.setUsername("root");
-	    driverManagerDataSource.setPassword("cornet");
-	    return driverManagerDataSource;
+
+		DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
+
+		driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
+
+		driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/rems_db");
+
+		driverManagerDataSource.setUsername("root");
+
+		driverManagerDataSource.setPassword("cornet");
+
+		return driverManagerDataSource;
 	}
 
 	@Bean
 	public LocalSessionFactoryBean sessionFactory() {
+		
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+		
 		sessionFactory.setDataSource(dataSource());
-		sessionFactory.setPackagesToScan(new String[] {PROPERTY_NAME_ENTITYMANAGER_PACKAGES_TO_SCAN});
+		
+		sessionFactory
+				.setPackagesToScan(new String[] { PROPERTY_NAME_ENTITYMANAGER_PACKAGES_TO_SCAN });
+		
 		sessionFactory.setHibernateProperties(hibProperties());
 
 		return sessionFactory;
@@ -57,18 +69,20 @@ public class AppConfig {
 
 	private Properties hibProperties() {
 
-		  Properties prop = new Properties();
-	        prop.put("hibernate.format_sql", "true");
-	        prop.put("hibernate.show_sql", "true");
-	        prop.put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
-	        return prop;
+		Properties prop = new Properties();
+		prop.put("hibernate.format_sql", "true");
+		prop.put("hibernate.show_sql", "false");
+		prop.put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+		return prop;
 	}
 
 	@Bean
 	@Autowired
 	public HibernateTransactionManager transactionManager(
 			SessionFactory sessionFactory) {
+		
 		HibernateTransactionManager txManager = new HibernateTransactionManager();
+		
 		txManager.setSessionFactory(sessionFactory);
 
 		return txManager;

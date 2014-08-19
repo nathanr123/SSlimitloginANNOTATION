@@ -13,5 +13,27 @@
 			<td colspan="2" align="center">${msg}</td>
 		</tr>
 	</c:if>
+
+	<h3>Users List</h3>
+	<c:if test="${!empty userlist}">
+		<table class="data">
+			<tr>
+				<th>User Name</th>
+				<th>Name</th>
+				<th>Email</th>
+				<th>Telephone</th>
+				<th>&nbsp;</th>
+			</tr>
+			<c:forEach items="${userlist}" var="userDetail">
+				<tr>
+				<td>${userDetail.username}</td>
+					<td>${userDetail.fullname}</td>
+					<td>${userDetail.mailid}</td>
+					<td>${userDetail.mobileno}</td>
+					<td><a href="">delete</a></td>
+				</tr>
+			</c:forEach>
+		</table>
+	</c:if>
 </body>
 </html>

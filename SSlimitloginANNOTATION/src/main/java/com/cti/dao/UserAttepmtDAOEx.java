@@ -19,8 +19,8 @@ import org.springframework.stereotype.Repository;
 import com.cti.model.UserAttempts;
 
 @Repository
-public class UserDetailsDaoImpl extends JdbcDaoSupport implements
-		UserDetailsDao {
+public class UserAttepmtDAOEx extends JdbcDaoSupport implements
+		UserAttepmtDAO {
 
 	private static final String SQL_USERS_UPDATE_LOCKED = "UPDATE REMS_USER SET accountNonLocked = ? WHERE username = ?";
 	private static final String SQL_USERS_COUNT = "SELECT count(*) FROM REMS_USER WHERE username = ?";

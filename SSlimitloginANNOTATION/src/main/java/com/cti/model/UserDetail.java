@@ -4,15 +4,14 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
-//@Entity
-//@Table(name = "rems_user_detail", catalog = "rems_db")
+@Entity
+@Table(name = "rems_user_detail")
 public class UserDetail {
 
 	// Variables for corresponding to DB Table
@@ -66,7 +65,6 @@ public class UserDetail {
 	 */
 	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "rems_user"))
 	@Id
-	@GeneratedValue(generator = "generator")
 	@Column(name = "username", unique = true, nullable = false, length = 16)
 	public String getUsername() {
 		return username;
@@ -91,7 +89,7 @@ public class UserDetail {
 	/**
 	 * @return the mobileno
 	 */
-	@Column(name = "mobileno", nullable = false, length = 15)
+	@Column(name = "mobilenumber", nullable = false, length = 15)
 	public String getMobileno() {
 		return mobileno;
 	}

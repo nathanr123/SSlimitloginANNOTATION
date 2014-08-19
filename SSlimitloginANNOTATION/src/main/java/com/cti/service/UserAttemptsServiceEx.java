@@ -6,7 +6,7 @@ package com.cti.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cti.dao.UserDetailsDao;
+import com.cti.dao.UserAttepmtDAO;
 import com.cti.model.UserAttempts;
 
 /**
@@ -14,10 +14,10 @@ import com.cti.model.UserAttempts;
  *
  */
 @Service
-public class UserAttemptsServiceImpl implements UserAttemptsService {
+public class UserAttemptsServiceEx implements UserAttemptsService {
 
 	@Autowired
-	UserDetailsDao userDetailsDao;
+	UserAttepmtDAO userDetailsDao;
 
 	/*
 	 * (non-Javadoc)

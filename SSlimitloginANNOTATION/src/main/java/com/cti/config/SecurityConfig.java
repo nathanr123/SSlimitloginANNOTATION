@@ -22,6 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		
 		auth.authenticationProvider(authenticationProvider);
 	}
 
@@ -38,7 +39,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Bean(name="passwordEncoder")
 	public PasswordEncoder passwordEncoder(){
+		
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
+		
 		return encoder;
 	}
 
