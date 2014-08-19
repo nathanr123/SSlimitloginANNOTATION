@@ -11,8 +11,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
-@Entity
-@Table(name = "rems_user_detail", catalog = "rems_db")
+//@Entity
+//@Table(name = "rems_user_detail", catalog = "rems_db")
 public class UserDetail {
 
 	// Variables for corresponding to DB Table

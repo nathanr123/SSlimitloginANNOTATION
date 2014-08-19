@@ -3,9 +3,9 @@ package com.cti.config;
 import java.util.Properties;
 
 import javax.annotation.Resource;
-import javax.sql.DataSource;
 
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +14,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
-import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
+import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -27,76 +27,51 @@ import org.springframework.web.servlet.view.JstlView;
 @PropertySource("classpath:application.properties")
 @Import({ SecurityConfig.class })
 public class AppConfig {
+	
+	private static final String PROPERTY_NAME_ENTITYMANAGER_PACKAGES_TO_SCAN =  "com.cti.model";
 
-	// Database Configurations
-	private static final String PROPERTY_NAME_DATABASE_DRIVER = "db.driver";
-
-	private static final String PROPERTY_NAME_DATABASE_PASSWORD = "db.password";
-
-	private static final String PROPERTY_NAME_DATABASE_URL = "db.url";
-
-	private static final String PROPERTY_NAME_DATABASE_USERNAME = "db.username";
-
-	// Hibernate Configurations
-	private static final String PROPERTY_NAME_HIBERNATE_DIALECT = "hibernate.dialect";
-
-	private static final String PROPERTY_NAME_HIBERNATE_SHOW_SQL = "hibernate.show_sql";
-
-	private static final String PROPERTY_NAME_ENTITYMANAGER_PACKAGES_TO_SCAN = "com.cti.model.*";
+	//private static final String PROPERTY_NAME_HIBERNATE_DDL_MODE = "hibernate.hbm2ddl.auto";
 
 	@Resource
 	private Environment env;
 
 	@Bean(name = "dataSource")
-	public DataSource dataSource() {
-
-		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-
-		dataSource.setDriverClassName(env
-				.getRequiredProperty(PROPERTY_NAME_DATABASE_DRIVER));
-
-		dataSource.setUrl(env.getRequiredProperty(PROPERTY_NAME_DATABASE_URL));
-
-		dataSource.setUsername(env
-				.getRequiredProperty(PROPERTY_NAME_DATABASE_USERNAME));
-
-		dataSource.setPassword(env
-				.getRequiredProperty(PROPERTY_NAME_DATABASE_PASSWORD));
-
-		return dataSource;
+	public DriverManagerDataSource dataSource() {
+	    DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
+	    driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
+	    driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/rems_db");
+	    driverManagerDataSource.setUsername("root");
+	    driverManagerDataSource.setPassword("cornet");
+	    return driverManagerDataSource;
 	}
 
 	@Bean
-	public SessionFactory sessionFactory() {
+	public LocalSessionFactoryBean sessionFactory() {
+		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+		sessionFactory.setDataSource(dataSource());
+		sessionFactory.setPackagesToScan(new String[] {PROPERTY_NAME_ENTITYMANAGER_PACKAGES_TO_SCAN});
+		sessionFactory.setHibernateProperties(hibProperties());
 
-		LocalSessionFactoryBuilder sessionFactoryBean = new LocalSessionFactoryBuilder(
-				dataSource());
-
-		/*sessionFactoryBean
-				.scanPackages(env
-						.getRequiredProperty(PROPERTY_NAME_ENTITYMANAGER_PACKAGES_TO_SCAN));*/
-
-		sessionFactoryBean.addProperties(hibProperties());
-
-		return sessionFactoryBean.buildSessionFactory();
+		return sessionFactory;
 	}
 
 	private Properties hibProperties() {
 
-		Properties properties = new Properties();
-
-		properties.put(PROPERTY_NAME_HIBERNATE_DIALECT,
-				env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_DIALECT));
-
-		properties.put(PROPERTY_NAME_HIBERNATE_SHOW_SQL,
-				env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_SHOW_SQL));
-
-		return properties;
+		  Properties prop = new Properties();
+	        prop.put("hibernate.format_sql", "true");
+	        prop.put("hibernate.show_sql", "true");
+	        prop.put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+	        return prop;
 	}
 
 	@Bean
-	public HibernateTransactionManager txManager() {
-		return new HibernateTransactionManager(sessionFactory());
+	@Autowired
+	public HibernateTransactionManager transactionManager(
+			SessionFactory sessionFactory) {
+		HibernateTransactionManager txManager = new HibernateTransactionManager();
+		txManager.setSessionFactory(sessionFactory);
+
+		return txManager;
 	}
 
 	@Bean

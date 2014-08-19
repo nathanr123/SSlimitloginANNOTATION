@@ -2,6 +2,8 @@ package com.cti.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.annotation.PostConstruct;
@@ -20,14 +22,14 @@ import com.cti.model.UserAttempts;
 public class UserDetailsDaoImpl extends JdbcDaoSupport implements
 		UserDetailsDao {
 
-	private static final String SQL_USERS_UPDATE_LOCKED = "UPDATE rems_user SET accountNonLocked = ? WHERE username = ?";
-	private static final String SQL_USERS_COUNT = "SELECT count(*) FROM rems_user WHERE username = ?";
+	private static final String SQL_USERS_UPDATE_LOCKED = "UPDATE REMS_USER SET accountNonLocked = ? WHERE username = ?";
+	private static final String SQL_USERS_COUNT = "SELECT count(*) FROM REMS_USER WHERE username = ?";
 
-	private static final String SQL_USER_ATTEMPTS_GET = "SELECT * FROM rems_user_attempts WHERE username = ?";
-	private static final String SQL_USER_ATTEMPTS_INSERT = "INSERT INTO rems_user_attempts (username, nofattempts, modifiedtime) VALUES(?,?,?)";
+	private static final String SQL_USER_ATTEMPTS_GET = "SELECT * FROM USER_ATTEMPTS WHERE username = ?";
+	private static final String SQL_USER_ATTEMPTS_INSERT = "INSERT INTO USER_ATTEMPTS (USERNAME, ATTEMPTS, LASTMODIFIED) VALUES(?,?,?)";
 
-	private static final String SQL_USER_ATTEMPTS_UPDATE_ATTEMPTS = "UPDATE rems_user_attempts SET nofattempts = nofattempts + 1, modifiedtime = ? WHERE username = ?";
-	private static final String SQL_USER_ATTEMPTS_RESET_ATTEMPTS = "UPDATE rems_user_attempts SET nofattempts = 0, modifiedtime = NOW() WHERE username = ?";
+	private static final String SQL_USER_ATTEMPTS_UPDATE_ATTEMPTS = "UPDATE USER_ATTEMPTS SET attempts = attempts + 1, lastmodified = ? WHERE username = ?";
+	private static final String SQL_USER_ATTEMPTS_RESET_ATTEMPTS = "UPDATE USER_ATTEMPTS SET attempts = 0, lastmodified = ? WHERE username = ?";
 
 	private static final int MAX_ATTEMPTS = 3;
 
@@ -39,6 +41,7 @@ public class UserDetailsDaoImpl extends JdbcDaoSupport implements
 		setDataSource(dataSource);
 	}
 
+	@Override
 	public void updateFailAttempts(String username) {
 
 		UserAttempts user = getUserAttempts(username);
@@ -56,7 +59,7 @@ public class UserDetailsDaoImpl extends JdbcDaoSupport implements
 						new Object[] { new Date(), username });
 			}
 
-			if (user.getNofattempts() + 1 >= MAX_ATTEMPTS) {
+			if (user.getAttempts() + 1 >= MAX_ATTEMPTS) {
 				// locked user
 				getJdbcTemplate().update(SQL_USERS_UPDATE_LOCKED,
 						new Object[] { false, username });
@@ -68,6 +71,7 @@ public class UserDetailsDaoImpl extends JdbcDaoSupport implements
 
 	}
 
+	@Override
 	public UserAttempts getUserAttempts(String username) {
 
 		try {
@@ -79,10 +83,14 @@ public class UserDetailsDaoImpl extends JdbcDaoSupport implements
 								throws SQLException {
 
 							UserAttempts user = new UserAttempts();
+							
 							user.setUsername(rs.getString("username"));
-							user.setNofattempts(rs.getInt("nofattempts"));
-							user.setCreatedtime(rs.getDate("createdtime"));
-							user.setModifiedtime(rs.getDate("modifiedtime"));
+							
+							user.setAttempts(rs.getInt("attempts"));
+
+							user.setLastModified(rs.getDate("lastModified"));
+
+							user.setFormattedDate(getFormatedDateString(rs.getTimestamp("lastModified")));
 
 							return user;
 						}
@@ -96,10 +104,21 @@ public class UserDetailsDaoImpl extends JdbcDaoSupport implements
 
 	}
 
+	private String getFormatedDateString(Timestamp t) {
+		
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy' 'HH:mm:ss a");
+
+		String s =simpleDateFormat.format(t);
+		
+        System.out.println(s);
+		
+		return s;
+	}
+	@Override
 	public void resetFailAttempts(String username) {
 
 		getJdbcTemplate().update(SQL_USER_ATTEMPTS_RESET_ATTEMPTS,
-				new Object[] { username });
+				new Object[] {new Date(), username });
 
 	}
 

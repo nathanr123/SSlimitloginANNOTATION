@@ -1,5 +1,6 @@
 package com.cti.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -8,26 +9,31 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "rems_user", catalog = "rems_db")
-public class User {
+@Table(name = "rems_user")
+public class User implements Serializable {
 
 	// Variables for corresponding to DB Table
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7189115628317969160L;
 
 	private String username;
 
 	private String password;
 
 	private int priority;
-	
+
 	private String userrole;
 
-	private boolean enabled;
+	private boolean enabled = true;
 
-	private boolean accountNonExpired;
+	private boolean accountNonExpired = true;
 
-	private boolean accountNonLocked;
+	private boolean accountNonLocked = true;
 
-	private boolean credentialsNonExpired;
+	private boolean credentialsNonExpired = true;
 
 	private Date createdtime;
 
@@ -41,26 +47,31 @@ public class User {
 	public User() {
 	}
 
-	
-
 	public User(String username, String password, int priority,
 			String userrole, boolean enabled, boolean accountNonExpired,
 			boolean accountNonLocked, boolean credentialsNonExpired,
 			Date createdtime, Date modifiedtime) {
-		super();
+
 		this.username = username;
+
 		this.password = password;
+
 		this.priority = priority;
+
 		this.userrole = userrole;
+
 		this.enabled = enabled;
+
 		this.accountNonExpired = accountNonExpired;
+
 		this.accountNonLocked = accountNonLocked;
+
 		this.credentialsNonExpired = credentialsNonExpired;
+
 		this.createdtime = createdtime;
+
 		this.modifiedtime = modifiedtime;
 	}
-
-
 
 	// Getter Methods
 
@@ -76,7 +87,7 @@ public class User {
 	/**
 	 * @return the password
 	 */
-	@Column(name = "password", nullable = false, length = 16)
+	@Column(name = "password", nullable = false, length = 250)
 	public String getPassword() {
 		return password;
 	}
@@ -92,11 +103,10 @@ public class User {
 	/**
 	 * @return the userrole
 	 */
+	@Column(name = "userrole", nullable = false)
 	public String getUserrole() {
 		return userrole;
 	}
-
-
 
 	/**
 	 * @return the enabled
@@ -145,8 +155,6 @@ public class User {
 	public Date getModifiedtime() {
 		return modifiedtime;
 	}
-	
-	
 
 	// Setter Methods
 
@@ -175,13 +183,12 @@ public class User {
 	}
 
 	/**
-	 * @param userrole the userrole to set
+	 * @param userrole
+	 *            the userrole to set
 	 */
 	public void setUserrole(String userrole) {
 		this.userrole = userrole;
 	}
-
-
 
 	/**
 	 * @param enabled

@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Table;
+import javax.persistence.Id;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -70,7 +71,7 @@ public class UserGroupPermission {
 	/**
 	 * @return the groupid
 	 */
-
+	@Id
 	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "rems_group"))
 	@GeneratedValue(generator = "generator")
 	@Column(name = "groupid", unique = true, nullable = false, length = 10)

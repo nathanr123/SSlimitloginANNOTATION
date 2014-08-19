@@ -22,24 +22,28 @@ public class UserDAOImpl implements UserDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 
+	protected Session getCurrentSession() {
+		return sessionFactory.getCurrentSession();
+	}
+
 	@Override
 	public void saveUser(User user) {
-		sessionFactory.getCurrentSession().save(user);
+		getCurrentSession().save(user);
 
 	}
 
 	@Override
 	public void updateUser(User user) {
-		sessionFactory.getCurrentSession().update(user);
+		getCurrentSession().update(user);
 
 	}
 
 	@Override
 	public void removeUser(String username) {
-		User user = (User) sessionFactory.getCurrentSession().get(User.class, username);
+		User user = (User) getCurrentSession().get(User.class, username);
 
 		if (null != user) {
-			sessionFactory.getCurrentSession().delete(user);
+			getCurrentSession().delete(user);
 		}
 
 	}
@@ -47,7 +51,7 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public User getUserById(String username) {
 
-		User user = (User) sessionFactory.getCurrentSession().get(User.class, username);
+		User user = (User) getCurrentSession().get(User.class, username);
 
 		System.out.println(user.getUsername());
 
@@ -58,8 +62,7 @@ public class UserDAOImpl implements UserDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> listUsers() {
-		return sessionFactory.getCurrentSession().getSessionFactory().getCurrentSession()
-				.createQuery("from User").list();
+		return getCurrentSession().createQuery("from User").list();
 	}
 
 }

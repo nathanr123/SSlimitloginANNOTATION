@@ -1,7 +1,9 @@
 package com.cti.controller;
 
+import java.util.Date;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -11,10 +13,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cti.model.User;
 import com.cti.model.UserDetail;
+//import com.cti.model.UserDetail;
+import com.cti.service.UserService;
 
 @Controller
 @EnableWebMvcSecurity
 public class UserController {
+
+	@Autowired
+	UserService userService;
 
 	@RequestMapping(value = "/newuser", method = RequestMethod.GET)
 	public ModelAndView goToNewUserRegistration(Map<String, Object> model) {
@@ -42,6 +49,10 @@ public class UserController {
 	public ModelAndView doCreateNewUser(@ModelAttribute("userForm") User user,
 			Map<String, Object> model) {
 
+		Date d = new Date();
+
+		user.setPassword(user.getPassword().split(",")[0]);
+
 		System.out.println("User Name : " + user.getUsername());
 
 		System.out.println("Password : " + user.getPassword());
@@ -55,6 +66,17 @@ public class UserController {
 
 		System.out.println("Is Credentials Expired : "
 				+ user.isCredentialsNonExpired());
+
+		user.setCreatedtime(d);
+
+		user.setModifiedtime(d);
+
+		user.setUserrole("ROLE_ADMIN");
+
+		userService.saveUser(user);
+
+		System.out.println("New User Saved " + user.getUsername()
+				+ " Successfully");
 
 		UserDetail userdetailForm = new UserDetail();
 

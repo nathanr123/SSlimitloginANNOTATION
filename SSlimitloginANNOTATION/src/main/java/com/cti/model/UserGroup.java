@@ -17,32 +17,25 @@ public class UserGroup {
 
 	private String groupname;
 
-	private String roleid;
-
 	private String priority;
 
 	private Date createdtime;
 
 	private Date modifiedtime;
 
-	// Constructors
-
 	/**
 	 * @param groupid
 	 * @param groupname
-	 * @param roleid
 	 * @param priority
 	 * @param createdtime
 	 * @param modifiedtime
 	 */
-	public UserGroup(String groupid, String groupname, String roleid,
-			String priority, Date createdtime, Date modifiedtime) {
+	public UserGroup(String groupid, String groupname, String priority,
+			Date createdtime, Date modifiedtime) {
 
 		this.groupid = groupid;
 
 		this.groupname = groupname;
-
-		this.roleid = roleid;
 
 		this.priority = priority;
 
@@ -51,12 +44,9 @@ public class UserGroup {
 		this.modifiedtime = modifiedtime;
 	}
 
-	// Getter Methods
-
 	/**
 	 * @return the groupid
 	 */
-
 	@Id
 	@Column(name = "groupid", nullable = false, unique = true, length = 10)
 	public String getGroupid() {
@@ -66,25 +56,14 @@ public class UserGroup {
 	/**
 	 * @return the groupname
 	 */
-
 	@Column(name = "groupname", nullable = false, length = 35)
 	public String getGroupname() {
 		return groupname;
 	}
 
 	/**
-	 * @return the roleid
-	 */
-
-	@Column(name = "roleid", nullable = false, length = 35)
-	public String getRoleid() {
-		return roleid;
-	}
-
-	/**
 	 * @return the priority
 	 */
-
 	@Column(name = "priority", nullable = false)
 	public String getPriority() {
 		return priority;
@@ -93,7 +72,6 @@ public class UserGroup {
 	/**
 	 * @return the createdtime
 	 */
-
 	@Column(name = "createdtime", nullable = false)
 	public Date getCreatedtime() {
 		return createdtime;
@@ -102,13 +80,10 @@ public class UserGroup {
 	/**
 	 * @return the modifiedtime
 	 */
-
 	@Column(name = "modifiedtime", nullable = false)
 	public Date getModifiedtime() {
 		return modifiedtime;
 	}
-
-	// Setter Methods
 
 	/**
 	 * @param groupid
@@ -124,14 +99,6 @@ public class UserGroup {
 	 */
 	public void setGroupname(String groupname) {
 		this.groupname = groupname;
-	}
-
-	/**
-	 * @param roleid
-	 *            the roleid to set
-	 */
-	public void setRoleid(String roleid) {
-		this.roleid = roleid;
 	}
 
 	/**

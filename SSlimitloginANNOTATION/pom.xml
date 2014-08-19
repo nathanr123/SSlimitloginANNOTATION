@@ -4,10 +4,10 @@
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.cti</groupId>
-	<artifactId>rems</artifactId>
+	<artifactId>SSlimitloginANNOTATION</artifactId>
 	<packaging>war</packaging>
 	<version>1.0 ALPHA</version>
-	<name>rems</name>
+	<name>SSlimitloginANNOTATION</name>
 	<url>http://www.cornetindia.com</url>
 
 	<properties>
@@ -186,22 +186,22 @@
 		<!-- Servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
 			<scope>provided</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
 			<artifactId>jsp-api</artifactId>
 			<version>2.1</version>
-			<scope>provided</scope>
+			
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-
 		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -222,7 +222,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>REMS</finalName>
+		<finalName>SSlimitloginANNOTATION</finalName>
 		<plugins>
 
 			<plugin>

@@ -23,17 +23,15 @@ DROP TABLE IF EXISTS `rems_group`;
 CREATE TABLE `rems_group` (
   `groupid` varchar(10) NOT NULL,
   `groupname` varchar(35) DEFAULT NULL,
-  `roleid` varchar(35) DEFAULT NULL,
   `priority` smallint(6) DEFAULT NULL,
   `createdtime` datetime NOT NULL,
   `modifiedtime` datetime NOT NULL,
-  PRIMARY KEY (`groupid`),
-  KEY `rems_group_ibfk_1` (`roleid`)
+  PRIMARY KEY (`groupid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `rems_group` */
 
-insert  into `rems_group`(`groupid`,`groupname`,`roleid`,`priority`,`createdtime`,`modifiedtime`) values ('GRP0001','Group1','SUPERADMIN',5,'2014-08-06 14:20:09','2014-08-06 14:20:09'),('GRP0002','Group2','ADMIN',4,'2014-08-06 14:20:09','2014-08-06 14:20:09'),('GRP0003','Group3','TECHNICIAN',3,'2014-08-06 14:20:09','2014-08-06 14:20:09'),('GRP0004','Group4','OPERATOR',2,'2014-08-06 14:20:09','2014-08-06 14:20:09'),('GRP0005','Group5','GUEST',1,'2014-08-06 14:20:09','2014-08-06 14:20:09');
+insert  into `rems_group`(`groupid`,`groupname`,`priority`,`createdtime`,`modifiedtime`) values ('GRP0001','Group1',5,'2014-08-06 14:20:09','2014-08-06 14:20:09'),('GRP0002','Group2',4,'2014-08-06 14:20:09','2014-08-06 14:20:09'),('GRP0003','Group3',3,'2014-08-06 14:20:09','2014-08-06 14:20:09'),('GRP0004','Group4',2,'2014-08-06 14:20:09','2014-08-06 14:20:09'),('GRP0005','Group5',1,'2014-08-06 14:20:09','2014-08-06 14:20:09');
 
 /*Table structure for table `rems_group_permission` */
 
@@ -126,7 +124,7 @@ DROP TABLE IF EXISTS `rems_user`;
 
 CREATE TABLE `rems_user` (
   `username` varchar(16) NOT NULL,
-  `password` varchar(16) NOT NULL,
+  `password` varchar(250) NOT NULL,
   `priority` smallint(6) DEFAULT NULL,
   `userrole` varchar(20) DEFAULT 'ROLE_ADMIN',
   `enabled` tinyint(1) NOT NULL DEFAULT '1',
@@ -140,22 +138,7 @@ CREATE TABLE `rems_user` (
 
 /*Data for the table `rems_user` */
 
-insert  into `rems_user`(`username`,`password`,`priority`,`userrole`,`enabled`,`accountNonExpired`,`accountNonLocked`,`credentialsNonExpired`,`createdtime`,`modifiedtime`) values ('admin','admin',9,'ROLE_ADMIN',1,1,1,1,'2014-08-06 14:47:14','2014-08-06 14:47:14'),('guest','guest',1,'ROLE_ADMIN',1,1,1,1,'2014-08-06 14:47:14','2014-08-06 14:47:14'),('operator','operator',10,'ROLE_ADMIN',1,1,1,1,'2014-08-06 14:47:14','2014-08-06 14:47:14'),('superadmin','superadmin',10,'ROLE_ADMIN',1,1,1,1,'2014-08-06 14:47:00','2014-08-06 14:47:00'),('technician','technician',8,'ROLE_ADMIN',1,1,1,1,'2014-08-06 14:47:14','2014-08-06 14:47:14');
-
-/*Table structure for table `rems_user_attempts` */
-
-DROP TABLE IF EXISTS `rems_user_attempts`;
-
-CREATE TABLE `rems_user_attempts` (
-  `username` varchar(16) NOT NULL,
-  `nofattempts` tinyint(2) NOT NULL DEFAULT '0',
-  `createdtime` datetime NOT NULL,
-  `modifiedtime` datetime NOT NULL,
-  PRIMARY KEY (`username`),
-  CONSTRAINT `rems_user_attempts_ibfk_1` FOREIGN KEY (`username`) REFERENCES `rems_user` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-/*Data for the table `rems_user_attempts` */
+insert  into `rems_user`(`username`,`password`,`priority`,`userrole`,`enabled`,`accountNonExpired`,`accountNonLocked`,`credentialsNonExpired`,`createdtime`,`modifiedtime`) values ('admin','$2a$10$ed1Xoyj76HyHHf7W8wPWy.j3WgMawG1fY1FQS6O2eAqkZDUq54nZy',9,'ROLE_ADMIN',1,1,1,1,'2014-08-06 14:47:14','2014-08-06 14:47:14'),('guest','$2a$10$z5YVgpr3kwK3aRgndfk3g.uG6wDxcQ4VcsZhaNL65eYZazi7Rquyy',1,'ROLE_ADMIN',1,1,1,1,'2014-08-06 14:47:14','2014-08-06 14:47:14'),('operator','$2a$10$mLqkq4xPu8kgRhkMkQ98J.HNe8GYbWcT5d2lI94UIbmPlyerjTihi',10,'ROLE_ADMIN',1,1,1,1,'2014-08-06 14:47:14','2014-08-06 14:47:14'),('superadmin','$2a$10$h2G/rfo2Vl/9S//ZuSHn4O2TPmwA/W93BhYt1Ex5EK9m4ia0wjD72',10,'ROLE_ADMIN',1,1,1,1,'2014-08-06 14:47:00','2014-08-06 14:47:00'),('technician','$2a$10$AST0vXNBqfVTIS4R3Kgo3..3IH6SxE3R6zYVtuP5lSk2k/GaxXtAa',8,'ROLE_ADMIN',1,1,1,1,'2014-08-06 14:47:14','2014-08-06 14:47:14');
 
 /*Table structure for table `rems_user_detail` */
 
@@ -173,8 +156,6 @@ CREATE TABLE `rems_user_detail` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `rems_user_detail` */
-
-insert  into `rems_user_detail`(`username`,`fullname`,`mailid`,`mobilenumber`,`createdtime`,`modifiedtime`) values ('admin','KAMALANATHAN','nathanr.kamal@gmail.com','8939258346','2014-08-06 14:50:56','2014-08-06 14:50:56');
 
 /*Table structure for table `rems_users_grouplist` */
 
@@ -194,6 +175,20 @@ CREATE TABLE `rems_users_grouplist` (
 /*Data for the table `rems_users_grouplist` */
 
 insert  into `rems_users_grouplist`(`username`,`groupid`,`createdtime`,`modifiedtime`) values ('superadmin','GRP0001','2014-08-07 18:30:36','2014-08-07 18:30:36'),('admin','GRP0002','2014-08-07 18:30:36','2014-08-07 18:30:36');
+
+/*Table structure for table `user_attempts` */
+
+DROP TABLE IF EXISTS `user_attempts`;
+
+CREATE TABLE `user_attempts` (
+  `username` varchar(45) NOT NULL,
+  `attempts` varchar(45) NOT NULL,
+  `lastModified` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `user_attempts` */
+
+insert  into `user_attempts`(`username`,`attempts`,`lastModified`) values ('guest','1','2014-08-19 14:19:51');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
