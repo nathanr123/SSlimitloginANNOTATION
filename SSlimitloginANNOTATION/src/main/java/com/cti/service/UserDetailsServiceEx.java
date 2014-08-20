@@ -68,4 +68,10 @@ public class UserDetailsServiceEx implements UserDetailsService {
 		return userDetailDAO.getUserDetailById(username);
 	}
 
+	@Override
+	public boolean isUserProfileAlreadyAvailable(String username) {
+		
+		return userDetailDAO.isUserProfileAlreadyAvailable(username);
+	}
+
 }

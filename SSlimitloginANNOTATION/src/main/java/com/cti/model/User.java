@@ -23,6 +23,8 @@ public class User implements Serializable {
 
 	private String password;
 
+	private String confirmPassword;
+
 	private int priority;
 
 	private String userrole;
@@ -236,6 +238,21 @@ public class User implements Serializable {
 	 */
 	public void setModifiedtime(Date modifiedtime) {
 		this.modifiedtime = modifiedtime;
+	}
+
+	/**
+	 * @return the confirmPassword
+	 */
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	/**
+	 * @param confirmPassword
+	 *            the confirmPassword to set
+	 */
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
 	}
 
 }

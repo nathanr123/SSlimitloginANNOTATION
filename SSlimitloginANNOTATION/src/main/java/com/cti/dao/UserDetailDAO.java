@@ -15,6 +15,8 @@ public interface UserDetailDAO {
 
 	public void updateUserDetail(UserDetail userDetail);
 
+	public boolean isUserProfileAlreadyAvailable(String username);
+	
 	public void removeUserDetail(String username);
 
 	public UserDetail getUserDetailById(String username);

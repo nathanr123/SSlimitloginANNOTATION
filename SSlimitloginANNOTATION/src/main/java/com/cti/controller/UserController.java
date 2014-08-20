@@ -2,6 +2,7 @@ package com.cti.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -9,9 +10,15 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cti.model.User;
@@ -19,6 +26,7 @@ import com.cti.model.UserDetail;
 import com.cti.service.UserDetailsService;
 //import com.cti.model.UserDetail;
 import com.cti.service.UserService;
+import com.cti.validator.UserValidator;
 
 @Controller
 @EnableWebMvcSecurity
@@ -28,9 +36,17 @@ public class UserController {
 	UserService userService;
 	@Autowired
 	UserDetailsService userDetailService;
+	@Autowired
+	UserValidator userValidator;	
+	
+	@InitBinder
+	protected void initBinder(WebDataBinder binder) {
+		binder.addValidators(userValidator);
+	}
 
 	@RequestMapping(value = "/newuser", method = RequestMethod.GET)
-	public ModelAndView goToNewUserRegistration(Map<String, Object> model) {
+	public @ResponseBody ModelAndView goToNewUserRegistration(
+			Map<String, Object> model) {
 
 		User userForm = new User();
 
@@ -45,11 +61,22 @@ public class UserController {
 
 	@RequestMapping(value = "/createnewuser", method = RequestMethod.POST)
 	public ModelAndView doCreateNewUser(@ModelAttribute("userForm") User user,
-			Map<String, Object> model) {
+			BindingResult result, Map<String, Object> model, SessionStatus status) {
 
+		ModelAndView mav = new ModelAndView();
+
+		userValidator.validate(user, result);
+
+		if (result.hasErrors()) {
+		
+			mav.setViewName("user");
+			
+			return mav;
+		}
+		else {
 		Date d = new Date();
 
-		user.setPassword(user.getPassword().split(",")[0]);
+		user.setPassword(user.getPassword());
 
 		user.setCreatedtime(d);
 
@@ -64,11 +91,34 @@ public class UserController {
 		userdetailForm.setUsername(user.getUsername());
 
 		model.put("userdetailForm", userdetailForm);
-
-		ModelAndView mav = new ModelAndView();
+		
 
 		mav.addObject("msg", "New User " + user.getUsername()
 				+ " Created Successfully");
+
+		mav.setViewName("userdetail");
+
+		return mav;
+		}
+
+	}
+
+	@RequestMapping(value = "/loadUserdetail", method = RequestMethod.GET)
+	public ModelAndView goUserProfileupdate(@RequestParam("user") String user,
+			Map<String, Object> model) {
+
+		UserDetail userdetailForm = userDetailService.getUserDetailById(user);
+
+		if (userdetailForm == null) {
+
+			userdetailForm = new UserDetail();
+
+			userdetailForm.setUsername(user);
+		}
+
+		model.put("userdetailForm", userdetailForm);
+
+		ModelAndView mav = new ModelAndView();
 
 		mav.setViewName("userdetail");
 
@@ -77,9 +127,13 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/updateuserdetail", method = RequestMethod.POST)
-	public String updateUserProfile(
+	public ModelAndView updateUserProfile(
 			@ModelAttribute("userdetailForm") UserDetail userDetail,
 			Map<String, Object> model) {
+
+		String view = "listuser";
+
+		String msg = "";
 
 		Date d = new Date();
 
@@ -87,32 +141,45 @@ public class UserController {
 
 		userDetail.setModifiedtime(d);
 
-		userDetailService.saveUserDetail(userDetail);
+		ModelAndView mav = new ModelAndView();
 
-		/*ModelAndView mav = new ModelAndView();
+		if (userDetailService.isUserProfileAlreadyAvailable(userDetail
+				.getUsername())) {
+			userDetailService.updateUserDetail(userDetail);
 
-		mav.addObject("userlist", getAllUsersDetail());
+			view = "hello";
 
-		mav.addObject("msg", userDetail.getUsername()
-				+ " Profile updated Successfully !!!!!");
+			msg = "Your Profile Updated Successfully !!";
 
-		mav.setViewName("listuser");
+		} else {
 
-		return mav;*/
-		
-		return "forward:/listusers";
+			userDetailService.saveUserDetail(userDetail);
+
+			msg = userDetail.getFullname() + " Profile Updated Successfully !!";
+
+			mav.addObject("userlist", getAllUsersDetail());
+		}
+
+		mav.addObject("msg", msg);
+
+		mav.setViewName(view);
+
+		return mav;
 
 	}
-	
+
 	@RequestMapping(value = "/listusers", method = RequestMethod.GET)
-	public ModelAndView listUsers() {
+	public ModelAndView listUsers(Map<String, Object> model) {
 
 		ModelAndView mav = new ModelAndView();
 
 		mav.addObject("userlist", getAllUsersDetail());
 
-		/*mav.addObject("msg", userDetail.getUsername()
-				+ " Profile updated Successfully !!!!!");*/
+		/*
+		 * mav.addObject("msg", userDetail.getUsername() +
+		 * " Profile updated Successfully !!!!!");
+		 */
+		// getAllUsersDetail();
 
 		mav.setViewName("listuser");
 
@@ -120,7 +187,8 @@ public class UserController {
 
 	}
 
-	private List<UserDetail> getAllUsersDetail() {
+	// @ModelAttribute("userlist")
+	public List<UserDetail> getAllUsersDetail() {
 		List<UserDetail> userDetailList = new ArrayList<UserDetail>();
 
 		List<User> users = userService.listUsers();
@@ -135,7 +203,7 @@ public class UserController {
 
 			if (ud == null) {
 				ud = new UserDetail();
-				
+
 				ud.setUsername(user.getUsername());
 
 				ud.setCreatedtime(user.getCreatedtime());
@@ -150,6 +218,18 @@ public class UserController {
 
 	private UserDetail getUserDetail(String username) {
 		return userDetailService.getUserDetailById(username);
+	}
+
+	@ModelAttribute("priorityLevel")
+	public Map<Integer, Integer> getPriority() {
+
+		Map<Integer, Integer> userPriorty = new HashMap<Integer, Integer>();
+
+		for (int i = 10; i > 0; i--) {
+			userPriorty.put(i, i);
+		}
+
+		return userPriorty;
 	}
 
 }

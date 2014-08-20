@@ -24,14 +24,11 @@ import org.springframework.web.servlet.view.JstlView;
 @Configuration
 @EnableTransactionManagement
 @ComponentScan({ "com.cti.*" })
-@PropertySource("classpath:application.properties")
+@PropertySource("application.properties")
 @Import({ SecurityConfig.class })
 public class AppConfig {
 
 	private static final String PROPERTY_NAME_ENTITYMANAGER_PACKAGES_TO_SCAN = "com.cti.model";
-
-	// private static final String PROPERTY_NAME_HIBERNATE_DDL_MODE =
-	// "hibernate.hbm2ddl.auto";
 
 	@Resource
 	private Environment env;
@@ -54,14 +51,14 @@ public class AppConfig {
 
 	@Bean
 	public LocalSessionFactoryBean sessionFactory() {
-		
+
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-		
+
 		sessionFactory.setDataSource(dataSource());
-		
+
 		sessionFactory
 				.setPackagesToScan(new String[] { PROPERTY_NAME_ENTITYMANAGER_PACKAGES_TO_SCAN });
-		
+
 		sessionFactory.setHibernateProperties(hibProperties());
 
 		return sessionFactory;
@@ -80,9 +77,9 @@ public class AppConfig {
 	@Autowired
 	public HibernateTransactionManager transactionManager(
 			SessionFactory sessionFactory) {
-		
+
 		HibernateTransactionManager txManager = new HibernateTransactionManager();
-		
+
 		txManager.setSessionFactory(sessionFactory);
 
 		return txManager;
