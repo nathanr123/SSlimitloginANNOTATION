@@ -6,9 +6,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
+import org.hibernate.validator.constraints.Email;
+import org.springframework.format.annotation.NumberFormat;
 
 @Entity
 @Table(name = "rems_user_detail")
@@ -16,12 +20,22 @@ public class UserDetail {
 
 	// Variables for corresponding to DB Table
 
+	@NotNull
+	@Size(min = 6, max = 16)
 	private String username;
 
+	@NotNull
+	@Size(min = 2, max = 35)
 	private String fullname;
 
+	@NotNull
+	@Size(min = 10, max = 100)
+	@Email
 	private String mailid;
 
+	@NotNull
+	@Size(min = 10, max = 10)
+	@NumberFormat(pattern = "##########")
 	private String mobileno;
 
 	private Date createdtime;

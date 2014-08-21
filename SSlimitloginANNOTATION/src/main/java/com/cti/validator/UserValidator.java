@@ -15,7 +15,7 @@ import com.cti.model.User;
  *
  */
 
-@Component("userFormValidator")
+//@Component("userFormValidator")
 public class UserValidator implements Validator {
 
 	/*
@@ -37,14 +37,12 @@ public class UserValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 
-		ValidationUtils.rejectIfEmpty(errors, "username", "required.userName",
-				"Field name is required.");
+		ValidationUtils.rejectIfEmpty(errors, "username", "required.userName");
 
-		ValidationUtils.rejectIfEmpty(errors, "password", "required.password",
-				"Field name is required.");
+		ValidationUtils.rejectIfEmpty(errors, "password", "required.password");
 
 		ValidationUtils.rejectIfEmpty(errors, "confirmPassword",
-				"required.confirmPassword", "Field name is required.");
+				"required.confirmPassword");
 
 		User user = (User) target;
 

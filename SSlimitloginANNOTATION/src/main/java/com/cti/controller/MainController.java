@@ -33,8 +33,6 @@ public class MainController {
 				&& !(authentication instanceof AnonymousAuthenticationToken)
 				&& authentication.isAuthenticated()) {
 
-			System.out.println(authentication.getName());
-
 			model.setViewName("hello");
 		} else {
 			model.setViewName("login");
@@ -116,7 +114,5 @@ public class MainController {
 		return model;
 
 	}
-	
-	
 
 }

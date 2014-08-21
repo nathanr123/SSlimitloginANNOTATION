@@ -9,6 +9,19 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Registration</title>
+<style>
+.error {
+	color: #ff0000;
+}
+
+.errorblock {
+	color: #000;
+	background-color: #ffEEEE;
+	border: 3px solid #ff0000;
+	padding: 8px;
+	margin: 16px;
+}
+</style>
 </head>
 <body>
 	<div align="center">
@@ -21,12 +34,12 @@
 					</tr>
 				</c:if>
 				<tr>
-					<td colspan="2" align="center"><h2>Spring MVC Form Demo -
-							Registration</h2></td>
+					<td colspan="2" align="center"><h2>"${userdetailForm.getUsername()}"
+							- Profile</h2></td>
 				</tr>
 				<tr>
 					<td>User Name:</td>
-					<td><form:input path="username"
+					<td><form:input path="username" disabled="true"
 							value="${userdetailForm.getUsername()}" /></td>
 				</tr>
 				<tr>
@@ -43,7 +56,10 @@
 					<td>Mobile No:</td>
 					<td><form:input path="mobileno" /></td>
 				</tr>
-
+				<tr>
+					<td colspan="2" align="center"><form:errors path="*"
+							cssClass="errorblock" element="div" /></td>
+				</tr>
 				<tr>
 					<td colspan="2" align="center"><input type="submit"
 						value="Update User Profile" /></td>
