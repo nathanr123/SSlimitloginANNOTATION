@@ -37,4 +37,10 @@ public class UserGroupListServiceEx implements UserGroupListService {
 		return userGroupListDAO.getUserGroupListByGroupId(groupId);
 	}
 
+	@Override
+	public void saveUsersandGroup(List<UsersGroupList> userGroupList) {
+		userGroupListDAO.saveUsersandGroup(userGroupList);
+		
+	}
+
 }

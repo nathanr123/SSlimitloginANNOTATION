@@ -15,7 +15,7 @@ import com.cti.model.User;
  *
  */
 
-//@Component("userFormValidator")
+@Component("userFormValidator")
 public class UserValidator implements Validator {
 
 	/*

@@ -2,8 +2,11 @@ package com.cti.service;
 
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.cti.model.UserGroup;
 
+@Transactional
 public interface GroupService {
 
 	public void addGroup(UserGroup group);

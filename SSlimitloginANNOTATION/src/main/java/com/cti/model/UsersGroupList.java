@@ -19,7 +19,7 @@ import org.hibernate.annotations.Parameter;
  *
  */
 @Entity
-@Table(name = "rems_users_grouplist", catalog = "rems_db")
+@Table(name = "rems_users_grouplist")
 public class UsersGroupList {
 
 	// Variables for corresponding to DB Table
@@ -59,7 +59,6 @@ public class UsersGroupList {
 	 */
 	@Id
 	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "rems_user"))
-	@GeneratedValue(generator = "generator")
 	@Column(name = "username", unique = true, nullable = false, length = 16)
 	public String getUsername() {
 		return username;
@@ -69,7 +68,6 @@ public class UsersGroupList {
 	 * @return the groupid
 	 */
 	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "rems_group"))
-	@GeneratedValue(generator = "generator")
 	@Column(name = "groupid", unique = true, nullable = false, length = 10)
 	public String getGroupid() {
 		return groupid;

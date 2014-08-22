@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "rems_group", catalog = "rems_db")
+@Table(name = "rems_group")
 public class UserGroup {
 
 	// Variables for corresponding to DB Table
@@ -23,6 +23,10 @@ public class UserGroup {
 
 	private Date modifiedtime;
 
+	public UserGroup() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	/**
 	 * @param groupid
 	 * @param groupname

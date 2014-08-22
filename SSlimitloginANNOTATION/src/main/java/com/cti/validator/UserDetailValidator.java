@@ -14,7 +14,7 @@ import com.cti.model.UserDetail;
  * @author nathanr_kamal
  *
  */
-//@Component("userDetailFormValidator")
+@Component("userDetailFormValidator")
 public class UserDetailValidator implements Validator {
 
 	private enum MOBILE_NUMBER_ERR {
@@ -40,7 +40,8 @@ public class UserDetailValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 
-		ValidationUtils.rejectIfEmpty(errors, "username", "required.userName");
+		// ValidationUtils.rejectIfEmpty(errors, "username",
+		// "required.userName");
 
 		ValidationUtils.rejectIfEmpty(errors, "fullname", "required.fullname");
 
@@ -50,8 +51,10 @@ public class UserDetailValidator implements Validator {
 
 		UserDetail userDetail = (UserDetail) target;
 
+		System.out.println("User name : " + userDetail.getUsername());
+
 		MOBILE_NUMBER_ERR err = isMobileNumber(userDetail.getMobileno());
-		
+
 		if (err == MOBILE_NUMBER_ERR.EMPTY || err == MOBILE_NUMBER_ERR.LENGTH
 				|| err == MOBILE_NUMBER_ERR.NONUMBERFORMAT) {
 			errors.rejectValue("mobileno", "notvalid.mobileno");
@@ -68,7 +71,7 @@ public class UserDetailValidator implements Validator {
 			ret = MOBILE_NUMBER_ERR.LENGTH;
 		} else {
 			try {
-				Integer.parseInt(in);
+				Long.parseLong(in);
 			} catch (NumberFormatException nfe) {
 				ret = MOBILE_NUMBER_ERR.NONUMBERFORMAT;
 			}
@@ -76,11 +79,11 @@ public class UserDetailValidator implements Validator {
 
 		return ret;
 	}
-	
+
 	private boolean isValidMailid(String mailid) {
-		
-	//	EmailValidator.getInstance().isValid(mailid)
-		
+
+		// EmailValidator.getInstance().isValid(mailid)
+
 		return false;
 	}
 }

@@ -25,7 +25,8 @@
 						href="${contextPath}/newuser">Create New User</a>| <a
 						href="${contextPath}/listusers">List User</a>| <a
 						href="${contextPath}/loadUserdetail?user=${pageContext.request.userPrincipal.name}">Update
-						Profile</a>
+						Profile</a>| <a
+						href="${contextPath}/loadUsersAndGroups">Assign User and Group</a>|
 				</h2>
 			</c:if>
 

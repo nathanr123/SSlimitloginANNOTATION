@@ -7,12 +7,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,7 +26,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cti.model.User;
 import com.cti.model.UserDetail;
 import com.cti.service.UserDetailsService;
-//import com.cti.model.UserDetail;
 import com.cti.service.UserService;
 
 @Controller
@@ -36,12 +37,29 @@ public class UserController {
 	@Autowired
 	UserDetailsService userDetailService;
 
-	// @Autowired
-	// UserValidator userValidator;
+	@Autowired
+	@Qualifier("userFormValidator")
+	Validator userValidator;
+
+	@Autowired
+	@Qualifier("userDetailFormValidator")
+	Validator userDetailValidator;
+
+	@InitBinder("userForm")
+	protected void initUserBinder(WebDataBinder binder) {
+		binder.setValidator(userValidator);
+	}
+
+	@InitBinder("userdetailForm")
+	protected void initUserDetailBinder(WebDataBinder binder) {
+		binder.setValidator(userDetailValidator);
+	}
 
 	@RequestMapping(value = "/newuser", method = RequestMethod.GET)
 	public @ResponseBody ModelAndView goToNewUserRegistration(
-			Map<String, Object> model, ModelAndView mav) {
+			Map<String, Object> model) {
+
+		ModelAndView mav = new ModelAndView();
 
 		User userForm = new User();
 
@@ -53,9 +71,13 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/createnewuser", method = RequestMethod.POST)
-	public ModelAndView doCreateNewUser( @ModelAttribute("userForm")@Valid User userForm,
+	public ModelAndView doCreateNewUser(@ModelAttribute("userForm") User user,
 			BindingResult result, Map<String, Object> model,
-			SessionStatus status, ModelAndView mav) {
+			SessionStatus status) {
+
+		ModelAndView mav = new ModelAndView();
+
+		userValidator.validate(user, result);
 
 		if (result.hasErrors()) {
 
@@ -65,23 +87,23 @@ public class UserController {
 		} else {
 			Date d = new Date();
 
-			userForm.setPassword(userForm.getPassword());
+			user.setPassword(user.getPassword());
 
-			userForm.setCreatedtime(d);
+			user.setCreatedtime(d);
 
-			userForm.setModifiedtime(d);
+			user.setModifiedtime(d);
 
-			userForm.setUserrole("ROLE_ADMIN");
+			user.setUserrole("ROLE_ADMIN");
 
-			userService.saveUser(userForm);
+			userService.saveUser(user);
 
 			UserDetail userdetailForm = new UserDetail();
 
-			userdetailForm.setUsername(userForm.getUsername());
+			userdetailForm.setUsername(user.getUsername());
 
 			model.put("userdetailForm", userdetailForm);
 
-			mav.addObject("msg", "New User " + userForm.getUsername()
+			mav.addObject("msg", "New User " + user.getUsername()
 					+ " Created Successfully");
 
 			mav.setViewName("userdetail");
@@ -93,7 +115,9 @@ public class UserController {
 
 	@RequestMapping(value = "/loadUserdetail", method = RequestMethod.GET)
 	public ModelAndView goUserProfileupdate(@RequestParam("user") String user,
-			Map<String, Object> model, ModelAndView mav) {
+			Map<String, Object> model) {
+
+		ModelAndView mav = new ModelAndView();
 
 		UserDetail userdetailForm = userDetailService.getUserDetailById(user);
 
@@ -106,7 +130,6 @@ public class UserController {
 
 		model.put("userdetailForm", userdetailForm);
 
-
 		mav.setViewName("userdetail");
 
 		return mav;
@@ -115,56 +138,62 @@ public class UserController {
 
 	@RequestMapping(value = "/updateuserdetail", method = RequestMethod.POST)
 	public ModelAndView updateUserProfile(
-			@ModelAttribute("userdetailForm") UserDetail userdetailForm,
-			BindingResult result, Map<String, Object> model,
-			SessionStatus status, ModelAndView mav) {
+			@ModelAttribute("userdetailForm") UserDetail userDetail,
+			BindingResult result, Map<String, Object> model) {
 
-		String view = "listuser";
+		ModelAndView mav = new ModelAndView();
 
-		String msg = "";
+		userDetailValidator.validate(userDetail, result);
 
-		Date d = new Date();
+		if (result.hasErrors()) {
 
-		userdetailForm.setCreatedtime(d);
+			mav.setViewName("userdetail");
 
-		userdetailForm.setModifiedtime(d);
-
-		if (userDetailService.isUserProfileAlreadyAvailable(userdetailForm
-				.getUsername())) {
-			userDetailService.updateUserDetail(userdetailForm);
-
-			view = "hello";
-
-			msg = "Your Profile Updated Successfully !!";
-
+			return mav;
 		} else {
 
-			userDetailService.saveUserDetail(userdetailForm);
+			String view = "listuser";
 
-			msg = userdetailForm.getFullname()
-					+ " Profile Updated Successfully !!";
+			String msg = "";
 
-			mav.addObject("userlist", getAllUsersDetail());
+			Date d = new Date();
+
+			userDetail.setCreatedtime(d);
+
+			userDetail.setModifiedtime(d);
+
+			if (userDetailService.isUserProfileAlreadyAvailable(userDetail
+					.getUsername())) {
+				userDetailService.updateUserDetail(userDetail);
+
+				view = "hello";
+
+				msg = "Your Profile Updated Successfully !!";
+
+			} else {
+
+				userDetailService.saveUserDetail(userDetail);
+
+				msg = userDetail.getFullname()
+						+ " Profile Updated Successfully !!";
+
+				mav.addObject("userlist", getAllUsersDetail());
+			}
+
+			mav.addObject("msg", msg);
+
+			mav.setViewName(view);
+
+			return mav;
 		}
-
-		mav.addObject("msg", msg);
-
-		mav.setViewName(view);
-
-		return mav;
-
 	}
 
 	@RequestMapping(value = "/listusers", method = RequestMethod.GET)
-	public ModelAndView listUsers(Map<String, Object> model, ModelAndView mav) {
+	public ModelAndView listUsers(Map<String, Object> model) {
+
+		ModelAndView mav = new ModelAndView();
 
 		mav.addObject("userlist", getAllUsersDetail());
-
-		/*
-		 * mav.addObject("msg", userDetail.getUsername() +
-		 * " Profile updated Successfully !!!!!");
-		 */
-		// getAllUsersDetail();
 
 		mav.setViewName("listuser");
 
@@ -172,7 +201,6 @@ public class UserController {
 
 	}
 
-	// @ModelAttribute("userlist")
 	public List<UserDetail> getAllUsersDetail() {
 		List<UserDetail> userDetailList = new ArrayList<UserDetail>();
 

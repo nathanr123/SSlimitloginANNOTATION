@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -14,7 +15,6 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "rems_user")
-//@ValidPasswords.List(value = { @ValidPasswords(password = "password", confirmPassword = "confirmPassword", message = "Password and Confirm password does not match") })
 public class User implements Serializable {
 
 	// Variables for corresponding to DB Table
@@ -25,19 +25,12 @@ public class User implements Serializable {
 
 	private static final long serialVersionUID = -7189115628317969160L;
 
-	@NotNull
-	@Size(min = 6, max = 16)
 	private String username;
 
-	@NotNull
-	@Size(min = 6, max = 16)
 	private String password;
 
-	@NotNull
-	@Size(min = 6, max = 16)
 	private String confirmPassword;
 
-	@Min(value = 1)
 	private int priority = -1;
 
 	private String userrole;
@@ -256,6 +249,7 @@ public class User implements Serializable {
 	/**
 	 * @return the confirmPassword
 	 */
+	@Transient
 	public String getConfirmPassword() {
 		return confirmPassword;
 	}

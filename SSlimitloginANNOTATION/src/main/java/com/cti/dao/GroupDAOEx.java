@@ -10,6 +10,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.cti.model.UserGroup;
@@ -24,7 +25,7 @@ public class GroupDAOEx implements GroupDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	private Session openSession() {
+	protected Session getCurrentSession() {
 		return sessionFactory.getCurrentSession();
 	}
 
@@ -66,12 +67,13 @@ public class GroupDAOEx implements GroupDAO {
 	 * 
 	 * @see com.cti.dao.GroupDAO#getGroupById(java.lang.String)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public UserGroup getGroupById(String groupId) {
 		List<UserGroup> grpList = new ArrayList<UserGroup>();
 
-		Query query = openSession().createQuery(
-				"from UsersGroup u where u.groupid = :groupid");
+		Query query = getCurrentSession().createQuery(
+				"from UserGroup u where u.groupid = :groupid");
 
 		query.setParameter("groupid", groupId);
 
@@ -90,19 +92,12 @@ public class GroupDAOEx implements GroupDAO {
 	 * 
 	 * @see com.cti.dao.GroupDAO#listGroups()
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserGroup> listGroups() {
-		List<UserGroup> grpList = new ArrayList<UserGroup>();
+		
+		return getCurrentSession().createQuery("from UserGroup").list();
 
-		Query query = openSession().createQuery("from UsersGroup");
-
-		grpList = query.list();
-
-		if (grpList.size() > 0)
-			return grpList;
-
-		else
-			return null;
 	}
 
 }

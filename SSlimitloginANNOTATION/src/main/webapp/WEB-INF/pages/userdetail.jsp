@@ -39,7 +39,7 @@
 				</tr>
 				<tr>
 					<td>User Name:</td>
-					<td><form:input path="username" disabled="true"
+					<td><form:input path="username" 
 							value="${userdetailForm.getUsername()}" /></td>
 				</tr>
 				<tr>
