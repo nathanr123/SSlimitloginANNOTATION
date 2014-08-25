@@ -10,11 +10,14 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cti.model.User;
+import com.cti.model.UserGroup;
 import com.cti.model.UsersGroupList;
+import com.cti.service.GroupService;
+import com.cti.service.UserService;
 
 /**
  * @author dharshini
@@ -25,6 +28,12 @@ public class UserGroupListDAOEx implements UserGroupListDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
+
+	@Autowired
+	UserService userService;
+
+	@Autowired
+	GroupService groupService;
 
 	protected Session getCurrentSession() {
 		return sessionFactory.getCurrentSession();
@@ -68,30 +77,69 @@ public class UserGroupListDAOEx implements UserGroupListDAO {
 
 	@Override
 	public void saveUsersandGroup(List<UsersGroupList> userGroupList) {
+		
+		// No Implementations
+	}
+
+	private void clearOldEntries(List<String> list) {
 
 		Session session = getCurrentSession();
 
-		//Transaction tx = session.beginTransaction();
+		if (list != null) {
+			for (Iterator<String> iterator = list.iterator(); iterator
+					.hasNext();) {
 
-		int i = 0;
+				String userName = iterator.next();
 
-		for (Iterator<UsersGroupList> iterator = userGroupList.iterator(); iterator
-				.hasNext();) {
+				session.createQuery(
+						"DELETE FROM UsersGroupList WHERE username=\'"
+								+ userName + "\'").executeUpdate();
 
-			UsersGroupList usersGrpList = iterator.next();
-
-			session.save(usersGrpList);
-
-			if (i % 20 == 0) { // 20, same as the JDBC batch size
-				// flush a batch of inserts and release memory:
-				session.flush();
-				session.clear();
 			}
-
-			i++;
 		}
 
-	//	tx.commit();
+	}
+
+	@Override
+	public void saveUsersandGroup(List<String> userList, List<String> grpList) {
+
+		Session session = getCurrentSession();
+
+		clearOldEntries(userList);
+
+		List<User> users = userService.listUsers(userList);
+
+		List<UserGroup> groups = groupService.listGroups(grpList);
+
+		for (Iterator<User> userIterator = users.iterator(); userIterator
+				.hasNext();) {
+
+			User user = userIterator.next();
+
+			for (Iterator<UserGroup> groupIterator = groups.iterator(); groupIterator
+					.hasNext();) {
+
+				UserGroup userGroup = groupIterator.next();
+
+				if (!userGroup.getUsers().contains(user)) {
+
+					userGroup.addUserToGroup(user);
+				}
+
+				if (!user.getGroups().contains(userGroup)) {
+					user.addGroupToUser(userGroup);
+				}
+
+			}
+		}
+
+		for (Iterator<UserGroup> groupIterator = groups.iterator(); groupIterator
+				.hasNext();) {
+
+			UserGroup userGroup = groupIterator.next();
+
+			session.save(userGroup);
+		}
 
 	}
 

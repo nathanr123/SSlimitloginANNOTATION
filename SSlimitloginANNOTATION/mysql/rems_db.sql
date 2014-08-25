@@ -138,7 +138,7 @@ CREATE TABLE `rems_user` (
 
 /*Data for the table `rems_user` */
 
-insert  into `rems_user`(`username`,`password`,`priority`,`userrole`,`enabled`,`accountNonExpired`,`accountNonLocked`,`credentialsNonExpired`,`createdtime`,`modifiedtime`) values ('admin','$2a$10$ed1Xoyj76HyHHf7W8wPWy.j3WgMawG1fY1FQS6O2eAqkZDUq54nZy',9,'ROLE_ADMIN',1,1,1,1,'2014-08-06 14:47:14','2014-08-06 14:47:14'),('guest','$2a$10$z5YVgpr3kwK3aRgndfk3g.uG6wDxcQ4VcsZhaNL65eYZazi7Rquyy',1,'ROLE_ADMIN',1,1,1,1,'2014-08-06 14:47:14','2014-08-06 14:47:14'),('operator','$2a$10$mLqkq4xPu8kgRhkMkQ98J.HNe8GYbWcT5d2lI94UIbmPlyerjTihi',10,'ROLE_ADMIN',1,1,1,1,'2014-08-06 14:47:14','2014-08-06 14:47:14'),('superadmin','$2a$10$h2G/rfo2Vl/9S//ZuSHn4O2TPmwA/W93BhYt1Ex5EK9m4ia0wjD72',10,'ROLE_ADMIN',1,1,1,1,'2014-08-06 14:47:00','2014-08-06 14:47:00'),('technician','$2a$10$AST0vXNBqfVTIS4R3Kgo3..3IH6SxE3R6zYVtuP5lSk2k/GaxXtAa',8,'ROLE_ADMIN',1,1,1,1,'2014-08-06 14:47:14','2014-08-06 14:47:14');
+insert  into `rems_user`(`username`,`password`,`priority`,`userrole`,`enabled`,`accountNonExpired`,`accountNonLocked`,`credentialsNonExpired`,`createdtime`,`modifiedtime`) values ('admin','$2a$10$ed1Xoyj76HyHHf7W8wPWy.j3WgMawG1fY1FQS6O2eAqkZDUq54nZy',9,'ROLE_ADMIN',1,1,1,1,'2014-08-06 14:47:14','2014-08-06 14:47:14'),('admin12345','$2a$10$NSEOKLwoOEIjPMzgQvEoQOb.A/OsxYFcTY5VBfBKztyjElFnlkEa.',3,'ROLE_ADMIN',1,1,1,1,'2014-08-22 12:19:53','2014-08-22 12:19:53'),('admin123456','$2a$10$m9kCaf1OMsTgleGCpNxBSOdqqC73gR7eibQP2YhzUgE/0fPRqpdNG',3,'ROLE_ADMIN',1,1,1,1,'2014-08-22 12:58:11','2014-08-22 12:58:11'),('admin333','$2a$10$/ltzqfQBs5xrfCTfMmv3Be4PtSAynSw8uvwjjuUvXzmItriTEGJL2',2,'ROLE_ADMIN',1,1,1,1,'2014-08-22 13:28:27','2014-08-22 13:28:27'),('admin33334','$2a$10$Ov2m2yopH7JKJ.sMZZIXJeol3eDmPsVFLPmaHGQymfXegormkWcWm',2,'ROLE_ADMIN',1,1,1,1,'2014-08-22 13:31:33','2014-08-22 13:31:33'),('d','$2a$10$gAX.hXK90P6D/HjTg0AdM.QoeBrVWxU6HCp1jQG.iadP6TIRfrmFG',3,'ROLE_ADMIN',1,1,1,1,'2014-08-20 14:44:47','2014-08-20 14:44:47'),('dddd','$2a$10$U95LC/5tYFGTsioi1p8ucOUBIkEryzeaBCF0oK7U3MWOAVycwtwy6',2,'ROLE_ADMIN',1,1,1,1,'2014-08-20 14:27:53','2014-08-20 14:27:53'),('guest','$2a$10$z5YVgpr3kwK3aRgndfk3g.uG6wDxcQ4VcsZhaNL65eYZazi7Rquyy',1,'ROLE_ADMIN',1,1,1,1,'2014-08-06 14:47:14','2014-08-06 14:47:14'),('mkyongf','$2a$10$UZ4fUqFWcDmw45tx5mnHr.g9mLHWgYkUptZVP6P1OtClplLYyMnC6',4,'ROLE_ADMIN',1,1,1,1,'2014-08-20 14:30:15','2014-08-20 14:30:15'),('operator','$2a$10$mLqkq4xPu8kgRhkMkQ98J.HNe8GYbWcT5d2lI94UIbmPlyerjTihi',10,'ROLE_ADMIN',1,1,1,1,'2014-08-06 14:47:14','2014-08-06 14:47:14'),('qq','$2a$10$CrebD2tWk1r8cGyvo9y/W.ik9.eXuLvbhKfwX5FKLvGE6Pfoojh22',2,'ROLE_ADMIN',1,1,1,1,'2014-08-20 14:37:32','2014-08-20 14:37:32'),('s','$2a$10$11fKqIG5DnatDoCHEPLKy.u9rpL0W10ElCEA/6l3rqIy5As4nRYAy',4,'ROLE_ADMIN',1,1,1,1,'2014-08-20 14:43:15','2014-08-20 14:43:15'),('superadmin','$2a$10$h2G/rfo2Vl/9S//ZuSHn4O2TPmwA/W93BhYt1Ex5EK9m4ia0wjD72',10,'ROLE_ADMIN',1,1,1,1,'2014-08-06 14:47:00','2014-08-06 14:47:00'),('technician','$2a$10$AST0vXNBqfVTIS4R3Kgo3..3IH6SxE3R6zYVtuP5lSk2k/GaxXtAa',8,'ROLE_ADMIN',1,1,1,1,'2014-08-06 14:47:14','2014-08-06 14:47:14'),('yhutyu','$2a$10$DsqIYaaTjZmbg9GeLh0YSeX2YYc87sAn/M.cYcrCs4kPQmvA77u2G',1,'ROLE_ADMIN',1,1,1,1,'2014-08-20 14:33:32','2014-08-20 14:33:32'),('yu','$2a$10$EF24/CFFvRAsvg8WKbwdoujIF1Lp8.VtQhgIrTZuw.ECXVFXkDU8i',3,'ROLE_ADMIN',1,1,1,1,'2014-08-20 14:39:19','2014-08-20 14:39:19');
 
 /*Table structure for table `rems_user_detail` */
 
@@ -157,6 +157,8 @@ CREATE TABLE `rems_user_detail` (
 
 /*Data for the table `rems_user_detail` */
 
+insert  into `rems_user_detail`(`username`,`fullname`,`mailid`,`mobilenumber`,`createdtime`,`modifiedtime`) values ('admin','R.Kamalanathan','nathanr.kamal@gmail.com','918939258346','2014-08-20 11:03:04','2014-08-20 11:03:04'),('admin123456','R.Kamalanathan','nathanr.kamal@gmail.com','8939258346','2014-08-22 13:38:39','2014-08-22 13:38:39'),('d','kongu','d','d','2014-08-20 14:45:28','2014-08-20 14:45:28'),('dddd','fd','df','df','2014-08-20 14:30:02','2014-08-20 14:30:02'),('guest','Guest','guest@gmail.com','9999988888','2014-08-20 10:52:39','2014-08-20 10:52:39'),('mkyongf','dfgdfdf','fdgdfg','dgdfgdfgf','2014-08-20 14:30:24','2014-08-20 14:30:24'),('qq','q','q','t','2014-08-20 14:37:48','2014-08-20 14:37:48'),('s','s','s','s','2014-08-20 14:43:19','2014-08-20 14:43:19'),('yhutyu','u','u','u','2014-08-20 14:33:35','2014-08-20 14:33:35'),('yu','yu','yu','yu','2014-08-20 14:39:25','2014-08-20 14:39:25');
+
 /*Table structure for table `rems_users_grouplist` */
 
 DROP TABLE IF EXISTS `rems_users_grouplist`;
@@ -164,8 +166,7 @@ DROP TABLE IF EXISTS `rems_users_grouplist`;
 CREATE TABLE `rems_users_grouplist` (
   `username` varchar(16) NOT NULL,
   `groupid` varchar(10) NOT NULL,
-  `createdtime` datetime NOT NULL,
-  `modifiedtime` datetime NOT NULL,
+  PRIMARY KEY (`username`,`groupid`),
   KEY `rems_users_grouplist_ibfk_1` (`username`),
   KEY `rems_users_grouplist_ibfk_2` (`groupid`),
   CONSTRAINT `rems_users_grouplist_ibfk_1` FOREIGN KEY (`username`) REFERENCES `rems_user` (`username`),
@@ -174,7 +175,7 @@ CREATE TABLE `rems_users_grouplist` (
 
 /*Data for the table `rems_users_grouplist` */
 
-insert  into `rems_users_grouplist`(`username`,`groupid`,`createdtime`,`modifiedtime`) values ('superadmin','GRP0001','2014-08-07 18:30:36','2014-08-07 18:30:36'),('admin','GRP0002','2014-08-07 18:30:36','2014-08-07 18:30:36');
+insert  into `rems_users_grouplist`(`username`,`groupid`) values ('admin','GRP0001'),('superadmin','GRP0001'),('admin','GRP0002'),('superadmin','GRP0002');
 
 /*Table structure for table `user_attempts` */
 

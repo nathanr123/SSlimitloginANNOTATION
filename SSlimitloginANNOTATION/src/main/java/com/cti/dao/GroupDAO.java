@@ -15,4 +15,7 @@ public interface GroupDAO {
 	public UserGroup getGroupById(String groupId);
 
 	public List<UserGroup> listGroups();
+	
+	public List<UserGroup> listGroups(List<String> grpList);
+
 }

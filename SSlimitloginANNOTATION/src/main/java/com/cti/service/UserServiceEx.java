@@ -76,7 +76,13 @@ public class UserServiceEx implements UserService {
 	@Override
 	public void updatePassword(User user) {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	@Override
+	public List<User> listUsers(List<String> userList) {
+		// TODO Auto-generated method stub
+		return userDAO.listUsers(userList);
 	}
 
 }

@@ -3,11 +3,11 @@
  */
 package com.cti.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -20,9 +20,14 @@ import org.hibernate.annotations.Parameter;
  */
 @Entity
 @Table(name = "rems_users_grouplist")
-public class UsersGroupList {
+public class UsersGroupList implements Serializable {
 
 	// Variables for corresponding to DB Table
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4289323341585063838L;
 
 	private String username;
 
@@ -33,6 +38,10 @@ public class UsersGroupList {
 	private Date modifiedtime;
 
 	// Constructors
+	
+	public UsersGroupList() {
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @param username
@@ -59,7 +68,7 @@ public class UsersGroupList {
 	 */
 	@Id
 	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "rems_user"))
-	@Column(name = "username", unique = true, nullable = false, length = 16)
+	@Column(name = "username", nullable = false, length = 16)
 	public String getUsername() {
 		return username;
 	}
@@ -68,7 +77,7 @@ public class UsersGroupList {
 	 * @return the groupid
 	 */
 	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "rems_group"))
-	@Column(name = "groupid", unique = true, nullable = false, length = 10)
+	@Column(name = "groupid", nullable = false, length = 10)
 	public String getGroupid() {
 		return groupid;
 	}

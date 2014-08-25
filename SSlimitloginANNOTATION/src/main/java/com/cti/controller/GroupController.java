@@ -3,8 +3,6 @@
  */
 package com.cti.controller;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -23,7 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cti.model.User;
 import com.cti.model.UserAndGroupList;
 import com.cti.model.UserGroup;
-import com.cti.model.UsersGroupList;
 import com.cti.service.GroupService;
 import com.cti.service.UserGroupListService;
 import com.cti.service.UserService;
@@ -49,14 +46,8 @@ public class GroupController {
 
 		ModelAndView mav = new ModelAndView();
 
-		// UserAndGroupList userAndGroupListForm = new UserAndGroupList();
-
 		mav.addObject("userAndGroupListForm", new UserAndGroupList());
-		/*
-		 * User userForm = new User();
-		 * 
-		 * model.put("userForm", userForm);
-		 */
+
 		mav.setViewName("assignuseransgroup");
 
 		return mav;
@@ -69,35 +60,14 @@ public class GroupController {
 
 		ModelAndView mav = new ModelAndView();
 
-		Date now = new Date();
-
-		List<UsersGroupList> usrGrpList = new ArrayList<UsersGroupList>();
-
 		List<String> grpList = userAndGroupListForm.getToGroup();
-
-		System.out.println(grpList.size());
 
 		List<String> userList = userAndGroupListForm.getToUser();
 
-		System.out.println(userList.size());
+		userGroupListService.saveUsersandGroup(userList, grpList);
 
-		if (grpList != null && userList != null) {
-			for (Iterator<String> iterator = userList.iterator(); iterator
-					.hasNext();) {
-				String usr = iterator.next();
-				for (Iterator<String> iterator2 = grpList.iterator(); iterator2
-						.hasNext();) {
-					String grp = iterator2.next();
-
-					usrGrpList.add(new UsersGroupList(usr, grp, now, now));
-
-				}
-
-			}
-		}
-
-		userGroupListService.saveUsersandGroup(usrGrpList);
-
+		mav.addObject("msg", "Groups are Assigned to the user");
+		
 		mav.setViewName("hello");
 
 		return mav;

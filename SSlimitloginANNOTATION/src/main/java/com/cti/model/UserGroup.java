@@ -1,10 +1,16 @@
 package com.cti.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -23,10 +29,12 @@ public class UserGroup {
 
 	private Date modifiedtime;
 
+	private Set<User> users = new HashSet<User>();
+
 	public UserGroup() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	/**
 	 * @param groupid
 	 * @param groupname
@@ -127,6 +135,27 @@ public class UserGroup {
 	 */
 	public void setModifiedtime(Date modifiedtime) {
 		this.modifiedtime = modifiedtime;
+	}
+
+	/**
+	 * @return the users
+	 */
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "rems_users_grouplist", joinColumns = @JoinColumn(name = "groupid"), inverseJoinColumns = @JoinColumn(name = "username"))
+	public Set<User> getUsers() {
+		return users;
+	}
+
+	/**
+	 * @param users
+	 *            the users to set
+	 */
+	public void setUsers(Set<User> users) {
+		this.users = users;
+	}
+
+	public void addUserToGroup(User usr) {
+		this.users.add(usr);
 	}
 
 }

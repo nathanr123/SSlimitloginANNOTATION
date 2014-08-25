@@ -3,6 +3,8 @@
  */
 package com.cti.dao;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -77,4 +79,18 @@ public class UserDAOEx implements UserDAO {
 		getCurrentSession().update(user);
 	}
 
+	@Override
+	public List<User> listUsers(List<String> userList) {
+
+		List<User> usersList = new ArrayList<User>();
+
+		for (Iterator<String> iterator = userList.iterator(); iterator
+				.hasNext();) {
+			String user = (String) iterator.next();
+
+			usersList.add(getUserById(user));
+
+		}
+		return usersList;
+	}
 }

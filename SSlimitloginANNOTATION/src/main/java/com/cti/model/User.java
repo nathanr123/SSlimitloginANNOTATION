@@ -2,16 +2,15 @@ package com.cti.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 
 @Entity
 @Table(name = "rems_user")
@@ -46,6 +45,8 @@ public class User implements Serializable {
 	private Date createdtime;
 
 	private Date modifiedtime;
+
+	private Set<UserGroup> groups = new HashSet<UserGroup>();
 
 	// Constructors
 
@@ -262,4 +263,24 @@ public class User implements Serializable {
 		this.confirmPassword = confirmPassword;
 	}
 
+	/**
+	 * @return the groups
+	 */
+	@ManyToMany(mappedBy = "users")
+	// Users List Variable name in UserGroup "users"
+	public Set<UserGroup> getGroups() {
+		return groups;
+	}
+
+	/**
+	 * @param groups
+	 *            the groups to set
+	 */
+	public void setGroups(Set<UserGroup> groups) {
+		this.groups = groups;
+	}
+
+	public void addGroupToUser(UserGroup usrGRP) {
+		this.groups.add(usrGRP);
+	}
 }

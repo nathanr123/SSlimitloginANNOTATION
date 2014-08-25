@@ -4,13 +4,13 @@
 package com.cti.dao;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.cti.model.UserGroup;
@@ -95,9 +95,23 @@ public class GroupDAOEx implements GroupDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserGroup> listGroups() {
-		
+
 		return getCurrentSession().createQuery("from UserGroup").list();
 
+	}
+
+	@Override
+	public List<UserGroup> listGroups(List<String> grpList) {
+
+		List<UserGroup> userGroupList = new ArrayList<UserGroup>();
+
+		for (Iterator<String> iterator = grpList.iterator(); iterator.hasNext();) {
+			String group = (String) iterator.next();
+
+			userGroupList.add(getGroupById(group));
+
+		}
+		return userGroupList;
 	}
 
 }

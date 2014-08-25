@@ -75,4 +75,9 @@ public class GroupServiceEx implements GroupService {
 		return groupDAO.listGroups();
 	}
 
+	@Override
+	public List<UserGroup> listGroups(List<String> grpList) {
+		return groupDAO.listGroups(grpList);
+	}
+
 }

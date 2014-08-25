@@ -19,18 +19,26 @@ import com.cti.model.UsersGroupList;
 public class UserGroupListServiceEx implements UserGroupListService {
 
 	@Autowired
-	UserGroupListDAO userGroupListDAO; 
-	
-	/* (non-Javadoc)
-	 * @see com.cti.service.UserGroupListService#getUserGroupListByUserId(java.lang.String)
+	UserGroupListDAO userGroupListDAO;
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.cti.service.UserGroupListService#getUserGroupListByUserId(java.lang
+	 * .String)
 	 */
 	@Override
 	public List<UsersGroupList> getUserGroupListByUserId(String username) {
 		return userGroupListDAO.getUserGroupListByUserId(username);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cti.service.UserGroupListService#getUserGroupListByGroupId(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.cti.service.UserGroupListService#getUserGroupListByGroupId(java.lang
+	 * .String)
 	 */
 	@Override
 	public List<UsersGroupList> getUserGroupListByGroupId(String groupId) {
@@ -40,7 +48,13 @@ public class UserGroupListServiceEx implements UserGroupListService {
 	@Override
 	public void saveUsersandGroup(List<UsersGroupList> userGroupList) {
 		userGroupListDAO.saveUsersandGroup(userGroupList);
-		
+
+	}
+
+	@Override
+	public void saveUsersandGroup(List<String> userList, List<String> grpList) {
+		userGroupListDAO.saveUsersandGroup(userList, grpList);
+
 	}
 
 }
