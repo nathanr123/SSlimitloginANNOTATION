@@ -3,6 +3,8 @@
  */
 package com.cti.controller;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -26,6 +28,8 @@ import com.cti.model.GroupPermissionForComponents;
 import com.cti.model.User;
 import com.cti.model.UserAndGroupList;
 import com.cti.model.UserGroup;
+import com.cti.model.UserGroupPermission;
+import com.cti.service.GroupPermissionService;
 import com.cti.service.GroupService;
 import com.cti.service.UserGroupListService;
 import com.cti.service.UserService;
@@ -46,6 +50,9 @@ public class GroupController {
 
 	@Autowired
 	UserGroupListService userGroupListService;
+
+	@Autowired
+	GroupPermissionService groupPermissionService;
 
 	@Autowired
 	@Qualifier("groupAssignValidator")
@@ -88,32 +95,36 @@ public class GroupController {
 			@ModelAttribute("userGroupPermissionForm") GroupPermissionForComponents userGroupPermissionForm,
 			BindingResult result, Map<String, Object> model) {
 
+		List<UserGroupPermission> listGroupPermission = new ArrayList<UserGroupPermission>();
+
 		ModelAndView mav = new ModelAndView();
 
-		mav.setViewName("hello");
+		int[] per = getPermissions(userGroupPermissionForm.getPermissions());
+
+		Date d = new Date();
 
 		List<String> toComp = userGroupPermissionForm.getToComponent();
-
-		for (Iterator<String> iterator = toComp.iterator(); iterator.hasNext();) {
-			System.out.println(iterator.next());
-
-		}
 
 		List<String> toGroup = userGroupPermissionForm.getToGroup();
 
 		for (Iterator<String> iterator = toGroup.iterator(); iterator.hasNext();) {
-			System.out.println(iterator.next());
 
+			String group = iterator.next();
+
+			for (Iterator<String> iterator1 = toComp.iterator(); iterator
+					.hasNext();) {
+
+				String comp = iterator1.next();
+
+				listGroupPermission.add(new UserGroupPermission(group, comp,
+						per, d));
+			}
 		}
 
-		List<String> per = userGroupPermissionForm.getPermissions();
+		groupPermissionService.setGroupPerssions(listGroupPermission);
 
-		for (Iterator<String> iterator = per.iterator(); iterator.hasNext();) {
-			System.out.println(iterator.next());
+		mav.setViewName("hello");
 
-		}
-
-		System.out.println("Finally Came here");
 		return mav;
 	}
 
@@ -208,5 +219,20 @@ public class GroupController {
 		}
 
 		return usersList;
+	}
+
+	private int[] getPermissions(List<String> permissioninString) {
+
+		int[] permissions = { 0, 0, 0, 1 };
+
+		permissions[0] = permissioninString.contains("Create") ? 1 : 0;
+
+		permissions[1] = permissioninString.contains("Modify") ? 1 : 0;
+
+		permissions[2] = permissioninString.contains("Delete") ? 1 : 0;
+
+		permissions[3] = permissioninString.contains("View") ? 1 : 0;
+
+		return permissions;
 	}
 }

@@ -66,6 +66,26 @@ public class UserGroupPermission {
 		this.modifiedtime = modifiedtime;
 	}
 
+	public UserGroupPermission(String groupid, String component,
+			int[] permissions, Date time) {
+
+		this.groupid = groupid;
+
+		this.component = component;
+
+		this.cancreate = permissions[0];
+
+		this.canmodify = permissions[1];
+
+		this.candelete = permissions[2];
+
+		this.canread = permissions[3];
+
+		this.createdtime = time;
+
+		this.modifiedtime = time;
+	}
+
 	// Getter Methods
 
 	/**
