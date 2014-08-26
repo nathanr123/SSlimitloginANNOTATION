@@ -34,6 +34,7 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
+
 	@Autowired
 	UserDetailsService userDetailService;
 
@@ -131,6 +132,27 @@ public class UserController {
 		model.put("userdetailForm", userdetailForm);
 
 		mav.setViewName("userdetail");
+
+		return mav;
+
+	}
+
+	@RequestMapping(value = "/deleteUser", method = RequestMethod.GET)
+	public ModelAndView deleteUser(@RequestParam("user") String user,
+			Map<String, Object> model) {
+
+		ModelAndView mav = new ModelAndView();
+
+		if (!userService.removeUser(user)) {
+
+			mav.addObject("msg", "Unable to delete " + user + ".");
+		}
+		else {
+			mav.addObject("msg", user + " successfully deleted.");
+		}
+		mav.addObject("userlist", getAllUsersDetail());
+
+		mav.setViewName("listuser");
 
 		return mav;
 

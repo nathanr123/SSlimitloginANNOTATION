@@ -9,15 +9,20 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cti.model.GroupPermissionForComponents;
 import com.cti.model.User;
 import com.cti.model.UserAndGroupList;
 import com.cti.model.UserGroup;
@@ -35,10 +40,21 @@ public class GroupController {
 
 	@Autowired
 	UserService userService;
+
 	@Autowired
 	GroupService groupService;
+
 	@Autowired
 	UserGroupListService userGroupListService;
+
+	@Autowired
+	@Qualifier("groupAssignValidator")
+	Validator groupAssignValidator;
+
+	@InitBinder("userAndGroupListForm")
+	protected void initUserBinder(WebDataBinder binder) {
+		binder.setValidator(groupAssignValidator);
+	}
 
 	@RequestMapping(value = "/loadUsersAndGroups", method = RequestMethod.GET)
 	public @ResponseBody ModelAndView loadUsersAndGroups(
@@ -53,6 +69,54 @@ public class GroupController {
 		return mav;
 	}
 
+	@RequestMapping(value = "/loadGroupPermission", method = RequestMethod.GET)
+	public @ResponseBody ModelAndView loadGroupPermission(
+			Map<String, Object> model) {
+
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("userGroupPermissionForm",
+				new GroupPermissionForComponents());
+
+		mav.setViewName("groupandpermission");
+
+		return mav;
+	}
+
+	@RequestMapping(value = "/assignGroupPermission", method = RequestMethod.POST)
+	public @ResponseBody ModelAndView assignGroupPermission(
+			@ModelAttribute("userGroupPermissionForm") GroupPermissionForComponents userGroupPermissionForm,
+			BindingResult result, Map<String, Object> model) {
+
+		ModelAndView mav = new ModelAndView();
+
+		mav.setViewName("hello");
+
+		List<String> toComp = userGroupPermissionForm.getToComponent();
+
+		for (Iterator<String> iterator = toComp.iterator(); iterator.hasNext();) {
+			System.out.println(iterator.next());
+
+		}
+
+		List<String> toGroup = userGroupPermissionForm.getToGroup();
+
+		for (Iterator<String> iterator = toGroup.iterator(); iterator.hasNext();) {
+			System.out.println(iterator.next());
+
+		}
+
+		List<String> per = userGroupPermissionForm.getPermissions();
+
+		for (Iterator<String> iterator = per.iterator(); iterator.hasNext();) {
+			System.out.println(iterator.next());
+
+		}
+
+		System.out.println("Finally Came here");
+		return mav;
+	}
+
 	@RequestMapping(value = "/assignUserandGroup", method = RequestMethod.POST)
 	public @ResponseBody ModelAndView assignUsersAndGroups(
 			@ModelAttribute("userAndGroupListForm") UserAndGroupList userAndGroupListForm,
@@ -60,17 +124,27 @@ public class GroupController {
 
 		ModelAndView mav = new ModelAndView();
 
-		List<String> grpList = userAndGroupListForm.getToGroup();
+		groupAssignValidator.validate(userAndGroupListForm, result);
 
-		List<String> userList = userAndGroupListForm.getToUser();
+		if (result.hasErrors()) {
 
-		userGroupListService.saveUsersandGroup(userList, grpList);
+			mav.setViewName("assignuseransgroup");
 
-		mav.addObject("msg", "Groups are Assigned to the user");
-		
-		mav.setViewName("hello");
+			return mav;
+		} else {
 
-		return mav;
+			List<String> grpList = userAndGroupListForm.getToGroup();
+
+			List<String> userList = userAndGroupListForm.getToUser();
+
+			userGroupListService.saveUsersandGroup(userList, grpList);
+
+			mav.addObject("msg", "Groups are Assigned to the user");
+
+			mav.setViewName("hello");
+
+			return mav;
+		}
 	}
 
 	@ModelAttribute("groupList")
@@ -89,6 +163,36 @@ public class GroupController {
 		}
 
 		return groupsList;
+	}
+
+	@ModelAttribute("componentList")
+	public Map<String, String> getComponentsList() {
+
+		Map<String, String> componentsList = new HashMap<String, String>();
+
+		componentsList.put("SWITCH", "SWITCH");
+
+		componentsList.put("USER", "USER");
+
+		componentsList.put("GROUP", "GROUP");
+
+		return componentsList;
+	}
+
+	@ModelAttribute("permissionList")
+	public Map<String, String> getPermissionsList() {
+
+		Map<String, String> permissionList = new HashMap<String, String>();
+
+		permissionList.put("Create", "Create");
+
+		permissionList.put("Modify", "Modify");
+
+		permissionList.put("Delete", "Delete");
+
+		permissionList.put("View", "View");
+
+		return permissionList;
 	}
 
 	@ModelAttribute("usersList")

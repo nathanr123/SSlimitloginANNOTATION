@@ -12,7 +12,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 @Entity
-@Table(name = "rems_group_permission", catalog = "rems_db")
+@Table(name = "rems_group_permission")
 public class UserGroupPermission {
 
 	// Variables for corresponding to DB Table

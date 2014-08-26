@@ -102,16 +102,18 @@ public class GroupDAOEx implements GroupDAO {
 
 	@Override
 	public List<UserGroup> listGroups(List<String> grpList) {
+		if (grpList != null) {
+			List<UserGroup> userGroupList = new ArrayList<UserGroup>();
 
-		List<UserGroup> userGroupList = new ArrayList<UserGroup>();
+			for (Iterator<String> iterator = grpList.iterator(); iterator
+					.hasNext();) {
+				String group = (String) iterator.next();
 
-		for (Iterator<String> iterator = grpList.iterator(); iterator.hasNext();) {
-			String group = (String) iterator.next();
+				userGroupList.add(getGroupById(group));
 
-			userGroupList.add(getGroupById(group));
-
-		}
-		return userGroupList;
+			}
+			return userGroupList;
+		} else
+			return null;
 	}
-
 }

@@ -24,6 +24,7 @@
 				<th>Email</th>
 				<th>Telephone</th>
 				<th>&nbsp;</th>
+				<th>&nbsp;</th>
 			</tr>
 			<c:forEach items="${userlist}" var="userDetail">
 				<tr>
@@ -32,6 +33,7 @@
 					<td>${userDetail.mailid}</td>
 					<td>${userDetail.mobileno}</td>
 					<td><a href="${contextPath}/loadUserdetail?user=${userDetail.username}">Modify</a></td>
+					<td><a href="${contextPath}/deleteUser?user=${userDetail.username}">Delete</a></td>
 				</tr>
 			</c:forEach>
 		</table>

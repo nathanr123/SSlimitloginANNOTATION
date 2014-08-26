@@ -51,8 +51,6 @@ public class UserDetailValidator implements Validator {
 
 		UserDetail userDetail = (UserDetail) target;
 
-		System.out.println("User name : " + userDetail.getUsername());
-
 		MOBILE_NUMBER_ERR err = isMobileNumber(userDetail.getMobileno());
 
 		if (err == MOBILE_NUMBER_ERR.EMPTY || err == MOBILE_NUMBER_ERR.LENGTH

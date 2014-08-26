@@ -77,7 +77,7 @@ public class UserGroupListDAOEx implements UserGroupListDAO {
 
 	@Override
 	public void saveUsersandGroup(List<UsersGroupList> userGroupList) {
-		
+
 		// No Implementations
 	}
 
@@ -105,42 +105,43 @@ public class UserGroupListDAOEx implements UserGroupListDAO {
 
 		Session session = getCurrentSession();
 
-		clearOldEntries(userList);
+		if (userList != null && grpList != null) {
+			clearOldEntries(userList);
 
-		List<User> users = userService.listUsers(userList);
+			List<User> users = userService.listUsers(userList);
 
-		List<UserGroup> groups = groupService.listGroups(grpList);
+			List<UserGroup> groups = groupService.listGroups(grpList);
 
-		for (Iterator<User> userIterator = users.iterator(); userIterator
-				.hasNext();) {
+			for (Iterator<User> userIterator = users.iterator(); userIterator
+					.hasNext();) {
 
-			User user = userIterator.next();
+				User user = userIterator.next();
+
+				for (Iterator<UserGroup> groupIterator = groups.iterator(); groupIterator
+						.hasNext();) {
+
+					UserGroup userGroup = groupIterator.next();
+
+					if (!userGroup.getUsers().contains(user)) {
+
+						userGroup.addUserToGroup(user);
+					}
+
+					if (!user.getGroups().contains(userGroup)) {
+						user.addGroupToUser(userGroup);
+					}
+
+				}
+			}
 
 			for (Iterator<UserGroup> groupIterator = groups.iterator(); groupIterator
 					.hasNext();) {
 
 				UserGroup userGroup = groupIterator.next();
 
-				if (!userGroup.getUsers().contains(user)) {
-
-					userGroup.addUserToGroup(user);
-				}
-
-				if (!user.getGroups().contains(userGroup)) {
-					user.addGroupToUser(userGroup);
-				}
-
+				session.save(userGroup);
 			}
 		}
-
-		for (Iterator<UserGroup> groupIterator = groups.iterator(); groupIterator
-				.hasNext();) {
-
-			UserGroup userGroup = groupIterator.next();
-
-			session.save(userGroup);
-		}
-
 	}
 
 }

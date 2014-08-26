@@ -26,7 +26,7 @@
 						href="${contextPath}/listusers">List User</a>| <a
 						href="${contextPath}/loadUserdetail?user=${pageContext.request.userPrincipal.name}">Update
 						Profile</a>| <a href="${contextPath}/loadUsersAndGroups">Assign
-						User and Group</a>|
+						User and Group</a>| <a href="${contextPath}/loadGroupPermission">Create Group Permissions</a>|
 				</h2>
 			</c:if>
 			<c:if test="${not empty msg}">

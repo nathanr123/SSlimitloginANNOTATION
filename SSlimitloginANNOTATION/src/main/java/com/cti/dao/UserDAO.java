@@ -6,13 +6,13 @@ import com.cti.model.User;
 
 public interface UserDAO {
 	
-	public void saveUser(User user);
+	public boolean saveUser(User user);
 	
-	public void updateUser(User user);
+	public boolean updateUser(User user);
 	
-	public void updatePassword(User user);
+	public boolean updatePassword(User user);
 	
-	public void removeUser(String username);
+	public boolean removeUser(String username);
 	
 	public User getUserById(String username);
 

@@ -5,8 +5,11 @@ package com.cti.dao;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.cti.model.User;
+import com.cti.model.UserAttempts;
+import com.cti.model.UserDetail;
+import com.cti.model.UsersGroupList;
 
 /**
  * @author nathanr_kamal
@@ -33,26 +39,27 @@ public class UserDAOEx implements UserDAO {
 	}
 
 	@Override
-	public void saveUser(User user) {
+	public boolean saveUser(User user) {
+		try {
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
+			getCurrentSession().save(user);
 
-		getCurrentSession().save(user);
+			return true;
+
+		} catch (Exception e) {
+			return false;
+		}
 
 	}
 
 	@Override
-	public void updateUser(User user) {
-		getCurrentSession().update(user);
-
-	}
-
-	@Override
-	public void removeUser(String username) {
-		User user = (User) getCurrentSession().get(User.class, username);
-
-		if (null != user) {
-			getCurrentSession().delete(user);
+	public boolean updateUser(User user) {
+		try {
+			getCurrentSession().update(user);
+			return true;
+		} catch (Exception e) {
+			return false;
 		}
 
 	}
@@ -73,24 +80,101 @@ public class UserDAOEx implements UserDAO {
 	}
 
 	@Override
-	public void updatePassword(User user) {
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
+	public boolean updatePassword(User user) {
+		try {
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-		getCurrentSession().update(user);
+			getCurrentSession().update(user);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	@Override
 	public List<User> listUsers(List<String> userList) {
 
-		List<User> usersList = new ArrayList<User>();
+		if (userList != null) {
+			List<User> usersList = new ArrayList<User>();
 
-		for (Iterator<String> iterator = userList.iterator(); iterator
-				.hasNext();) {
-			String user = (String) iterator.next();
+			for (Iterator<String> iterator = userList.iterator(); iterator
+					.hasNext();) {
+				String user = (String) iterator.next();
 
-			usersList.add(getUserById(user));
+				usersList.add(getUserById(user));
 
+			}
+			return usersList;
+		} else
+			return null;
+
+	}
+
+	@Override
+	public boolean removeUser(String username) {
+
+		// Revisit in future
+		/*
+		 * User user = (User) getCurrentSession().load(User.class, username);
+		 * 
+		 * if (user != null) {
+		 * 
+		 * getCurrentSession().delete(user);
+		 * 
+		 * return false; } return false;
+		 */
+		return deleteAllUserRecords(username);
+	}
+
+	private String getDeleteQuery(String table, String username) {
+
+		return String.format("DELETE FROM %s WHERE username= \'%s\'", table,
+				username);
+	}
+
+	private List<String> getAllDeletingQueries(String username) {
+
+		List<String> qryList = new ArrayList<String>();
+
+		Iterator<String> it = getAllUserChildNames().iterator();
+
+		while (it.hasNext()) {
+			qryList.add(getDeleteQuery(it.next(), username));
 		}
-		return usersList;
+
+		return qryList;
+	}
+
+	private boolean deleteAllUserRecords(String username) {
+
+		try {
+			Session session = getCurrentSession();
+
+			List<String> it = getAllDeletingQueries(username);
+
+			for (Iterator<String> iterator = it.iterator(); iterator.hasNext();) {
+
+				session.createQuery(iterator.next()).executeUpdate();
+			}
+
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	public Set<String> getAllUserChildNames() {
+
+		LinkedHashSet<String> childList = new LinkedHashSet<String>();
+
+		childList.add(UserAttempts.class.getName());
+
+		childList.add(UsersGroupList.class.getName());
+
+		childList.add(UserDetail.class.getName());
+
+		childList.add(User.class.getName());
+
+		return childList;
 	}
 }

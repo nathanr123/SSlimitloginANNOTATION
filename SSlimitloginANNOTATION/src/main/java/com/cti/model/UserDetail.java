@@ -1,10 +1,14 @@
 package com.cti.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -12,7 +16,12 @@ import org.hibernate.annotations.Parameter;
 
 @Entity
 @Table(name = "rems_user_detail")
-public class UserDetail {
+public class UserDetail implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3148442339401956177L;
 
 	// Variables for corresponding to DB Table
 
@@ -27,6 +36,8 @@ public class UserDetail {
 	private Date createdtime;
 
 	private Date modifiedtime;
+
+	private User user;
 
 	// Constructors
 
@@ -158,6 +169,23 @@ public class UserDetail {
 	 */
 	public void setModifiedtime(Date modifiedtime) {
 		this.modifiedtime = modifiedtime;
+	}
+
+	/**
+	 * @return the user
+	 */
+	@OneToOne(fetch = FetchType.LAZY)
+	@PrimaryKeyJoinColumn
+	public User getUser() {
+		return user;
+	}
+
+	/**
+	 * @param user
+	 *            the user to set
+	 */
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

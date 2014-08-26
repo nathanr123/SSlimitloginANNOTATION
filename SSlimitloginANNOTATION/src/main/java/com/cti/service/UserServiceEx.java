@@ -27,8 +27,8 @@ public class UserServiceEx implements UserService {
 	 * @see com.cti.service.UserService#saveUser(com.cti.model.User)
 	 */
 	@Override
-	public void saveUser(User user) {
-		userDAO.saveUser(user);
+	public boolean saveUser(User user) {
+		return userDAO.saveUser(user);
 
 	}
 
@@ -38,8 +38,8 @@ public class UserServiceEx implements UserService {
 	 * @see com.cti.service.UserService#updateUser(com.cti.model.User)
 	 */
 	@Override
-	public void updateUser(User user) {
-		userDAO.updateUser(user);
+	public boolean updateUser(User user) {
+		return userDAO.updateUser(user);
 
 	}
 
@@ -49,8 +49,8 @@ public class UserServiceEx implements UserService {
 	 * @see com.cti.service.UserService#removeUser(java.lang.String)
 	 */
 	@Override
-	public void removeUser(String username) {
-		userDAO.removeUser(username);
+	public boolean removeUser(String username) {
+		return userDAO.removeUser(username);
 	}
 
 	/*
@@ -74,8 +74,8 @@ public class UserServiceEx implements UserService {
 	}
 
 	@Override
-	public void updatePassword(User user) {
-		// TODO Auto-generated method stub
+	public boolean updatePassword(User user) {
+		return false;// TODO Auto-generated method stub
 
 	}
 

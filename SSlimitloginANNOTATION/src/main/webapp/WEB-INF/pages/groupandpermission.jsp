@@ -65,14 +65,14 @@
 .error {
 	color: #ff0000;
 }
-.errorblock{
+
+.errorblock {
 	color: #000;
 	background-color: #ffEEEE;
 	border: 3px solid #ff0000;
-	padding:8px;
-	margin:16px;
+	padding: 8px;
+	margin: 16px;
 }
-
 </style>
 </head>
 <body>
@@ -81,8 +81,8 @@
 			<td colspan="2" align="center">${msg}</td>
 		</tr>
 	</c:if>
-	<form:form action="assignUserandGroup" method="post"
-		commandName="userAndGroupListForm">
+	<form:form action="assignGroupPermission" method="post"
+		commandName="userGroupPermissionForm">
 		<table style="width: 50%;">
 			<tr>
 				<td colspan="3" align="center">Assigning Users and Groups</td>
@@ -115,24 +115,36 @@
 				<td colspan="3" align="left">Users list</td>
 			</tr>
 			<tr>
-				<td style="width: 46%;"><form:select path="fromUser"
-						items="${usersList}" multiple="true"
+				<td style="width: 46%;"><form:select path="fromComponent"
+						items="${componentList}" multiple="true"
 						style="width:100%;height:350px;" /></td>
 				<td style="width: 8%;">
 					<table style="width: 100%; height: 50%;">
 						<tr>
 							<td><input type="button"
-								onClick="move(this.form.fromUser,this.form.toUser)" value="->"></td>
+								onClick="move(this.form.fromComponent,this.form.toComponent)" value="->"></td>
 						</tr>
 						<tr>
 							<td><input type="button"
-								onClick="move(this.form.toUser,this.form.fromUser)" value="<-">
+								onClick="move(this.form.toComponent,this.form.fromComponent)" value="<-">
 							</td>
 						</tr>
 					</table>
 				</td>
-				<td style="width: 46%;"><form:select path="toUser"
+				<td style="width: 46%;"><form:select path="toComponent"
 						multiple="true" style="width:100%;height:350px;" /></td>
+			</tr>
+			<tr>
+				<td colspan="3" align="center"><p class="errorblock">These
+						group of users has the following permissions for the selected
+						components.</p></td>
+			</tr>
+			<tr>
+				<td colspan="3" align="left">Permissions</td>
+			</tr>
+			<tr>
+				<td colspan="3" align="left"><form:checkboxes
+						items="${permissionList}" path="permissions" /></td>
 			</tr>
 			<tr>
 				<td colspan="3" align="center"><form:errors path="*"
@@ -141,7 +153,7 @@
 			<tr>
 				<td colspan="3" align="center"><input type="submit"
 					value="Apply" /></td>
-			</tr>			
+			</tr>
 		</table>
 	</form:form>
 </body>

@@ -53,9 +53,12 @@ public class AppConfig {
 	
 	@Bean
     public MessageSource messageSource() { 
-        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasename("message");
-        return messageSource;
+        
+		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        
+		messageSource.setBasename("message");
+        
+		return messageSource;
     }  
 
 	@Bean
@@ -76,9 +79,13 @@ public class AppConfig {
 	private Properties hibProperties() {
 
 		Properties prop = new Properties();
+		
 		prop.put("hibernate.format_sql", "true");
-		prop.put("hibernate.show_sql", "false");
+		
+		prop.put("hibernate.show_sql", "true");
+		
 		prop.put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+		
 		return prop;
 	}
 
