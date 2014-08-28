@@ -70,7 +70,7 @@ public class GroupPermissionServiceEx implements GroupPermissionService {
 	}
 
 	@Override
-	public List<UserGroupPermission> getGroupPerssions(String groupId,
+	public UserGroupPermission getGroupPerssions(String groupId,
 			String componentName) {
 
 		return groupPermissionDAO.getGroupPerssions(groupId, componentName);

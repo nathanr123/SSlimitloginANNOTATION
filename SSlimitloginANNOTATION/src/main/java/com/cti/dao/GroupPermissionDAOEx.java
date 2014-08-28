@@ -13,7 +13,9 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cti.model.UserGroup;
 import com.cti.model.UserGroupPermission;
+import com.cti.service.GroupService;
 
 /**
  * @author dharshini
@@ -24,6 +26,9 @@ public class GroupPermissionDAOEx implements GroupPermissionDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
+
+	@Autowired
+	GroupService groupService;
 
 	protected Session getCurrentSession() {
 		return sessionFactory.getCurrentSession();
@@ -37,7 +42,38 @@ public class GroupPermissionDAOEx implements GroupPermissionDAO {
 	 */
 	@Override
 	public void setGroupPerssions(UserGroupPermission userGroupPermission) {
-		getCurrentSession().saveOrUpdate(userGroupPermission);
+
+		UserGroupPermission ugp = getGroupPerssions(
+				userGroupPermission.getGroupid(),
+				userGroupPermission.getComponent());
+
+		if (ugp == null) {
+
+			ugp = userGroupPermission;
+
+		} else {
+
+			ugp.setCancreate(userGroupPermission.getCancreate());
+
+			ugp.setCandelete(userGroupPermission.getCandelete());
+
+			ugp.setCanmodify(userGroupPermission.getCanmodify());
+
+			ugp.setCanread(userGroupPermission.getCanread());
+
+			ugp.setCreatedtime(userGroupPermission.getCreatedtime());
+
+			ugp.setModifiedtime(userGroupPermission.getModifiedtime());
+		}
+
+		UserGroup grp = groupService.getGroupById(userGroupPermission
+				.getGroupid());
+
+		ugp.setGroups(grp);
+
+		grp.getUserGroupPermissions().add(ugp);
+
+		getCurrentSession().saveOrUpdate(ugp);
 
 	}
 
@@ -107,9 +143,12 @@ public class GroupPermissionDAOEx implements GroupPermissionDAO {
 	}
 
 	@Override
-	public List<UserGroupPermission> getGroupPerssions(String groupId,
+	public UserGroupPermission getGroupPerssions(String groupId,
 			String componentName) {
+
 		List<UserGroupPermission> grpList = new ArrayList<UserGroupPermission>();
+
+		UserGroupPermission u = null;
 
 		Query query = getCurrentSession()
 				.createQuery(
@@ -121,11 +160,11 @@ public class GroupPermissionDAOEx implements GroupPermissionDAO {
 
 		grpList = query.list();
 
-		if (grpList.size() > 0)
-			return grpList;
+		if (grpList.size()>0) {
+			u = grpList.get(0);
+		}
 
-		else
-			return null;
+		return u;
 	}
 
 }

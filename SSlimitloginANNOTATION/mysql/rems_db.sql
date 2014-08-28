@@ -31,13 +31,14 @@ CREATE TABLE `rems_group` (
 
 /*Data for the table `rems_group` */
 
-insert  into `rems_group`(`groupid`,`groupname`,`priority`,`createdtime`,`modifiedtime`) values ('GRP0001','Group1',5,'2014-08-06 14:20:09','2014-08-06 14:20:09'),('GRP0002','Group2',4,'2014-08-06 14:20:09','2014-08-06 14:20:09'),('GRP0003','Group3',3,'2014-08-06 14:20:09','2014-08-06 14:20:09'),('GRP0004','Group4',2,'2014-08-06 14:20:09','2014-08-06 14:20:09'),('GRP0005','Group5',1,'2014-08-06 14:20:09','2014-08-06 14:20:09');
+insert  into `rems_group`(`groupid`,`groupname`,`priority`,`createdtime`,`modifiedtime`) values ('GRP0001','Group1',5,'2014-08-06 14:20:09','2014-08-06 14:20:09'),('GRP0002','Group2',4,'2014-08-06 14:20:09','2014-08-06 14:20:09'),('GRP0003','Group3',3,'2014-08-06 14:20:09','2014-08-06 14:20:09'),('GRP0005','Group5',1,'2014-08-06 14:20:09','2014-08-06 14:20:09'),('GRP0006','MyGroup1234',5,'2014-08-27 17:26:44','2014-08-27 17:27:03');
 
 /*Table structure for table `rems_group_permission` */
 
 DROP TABLE IF EXISTS `rems_group_permission`;
 
 CREATE TABLE `rems_group_permission` (
+  `permissionid` int(11) NOT NULL AUTO_INCREMENT,
   `groupid` varchar(10) NOT NULL,
   `component` varchar(35) DEFAULT NULL,
   `canread` tinyint(1) DEFAULT '1',
@@ -46,13 +47,14 @@ CREATE TABLE `rems_group_permission` (
   `candelete` tinyint(1) DEFAULT '0',
   `createdtime` datetime NOT NULL,
   `modifiedtime` datetime NOT NULL,
+  PRIMARY KEY (`permissionid`),
   KEY `rems_group_permission_ibfk_1` (`groupid`),
   CONSTRAINT `rems_group_permission_ibfk_1` FOREIGN KEY (`groupid`) REFERENCES `rems_group` (`groupid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 /*Data for the table `rems_group_permission` */
 
-insert  into `rems_group_permission`(`groupid`,`component`,`canread`,`cancreate`,`canmodify`,`candelete`,`createdtime`,`modifiedtime`) values ('GRP0001','SWITCH',1,1,1,1,'2014-08-06 14:42:54','2014-08-06 14:42:54'),('GRP0001','USER',1,1,1,1,'2014-08-06 14:42:54','2014-08-06 14:42:54'),('GRP0001','GROUP',1,1,1,1,'2014-08-06 14:42:54','2014-08-06 14:42:54'),('GRP0002','SWITCH',1,1,1,0,'2014-08-06 14:42:54','2014-08-06 14:42:54'),('GRP0002','USER',1,1,1,0,'2014-08-06 14:42:54','2014-08-06 14:42:54'),('GRP0002','GROUP',1,1,1,0,'2014-08-06 14:42:54','2014-08-06 14:42:54'),('GRP0003','SWITCH',1,0,1,0,'2014-08-06 14:42:54','2014-08-06 14:42:54'),('GRP0003','USER',1,0,0,0,'2014-08-06 14:42:54','2014-08-06 14:42:54'),('GRP0003','GROUP',0,0,0,0,'2014-08-06 14:42:54','2014-08-06 14:42:54'),('GRP0004','SWITCH',1,0,1,0,'2014-08-06 14:42:54','2014-08-06 14:42:54'),('GRP0004','USER',0,0,0,0,'2014-08-06 14:42:54','2014-08-06 14:42:54'),('GRP0004','GROUP',0,0,0,0,'2014-08-06 14:42:54','2014-08-06 14:42:54'),('GRP0005','SWITCH',1,0,1,0,'2014-08-06 14:42:54','2014-08-06 14:42:54'),('GRP0005','USER',0,0,0,0,'2014-08-06 14:42:54','2014-08-06 14:42:54'),('GRP0005','GROUP',0,0,0,0,'2014-08-06 14:42:54','2014-08-06 14:42:54');
+insert  into `rems_group_permission`(`permissionid`,`groupid`,`component`,`canread`,`cancreate`,`canmodify`,`candelete`,`createdtime`,`modifiedtime`) values (2,'GRP0001','SWITCH',1,1,1,1,'2014-08-27 11:47:01','2014-08-27 11:47:01'),(7,'GRP0001','GROUP',1,1,1,1,'2014-08-27 11:47:01','2014-08-27 11:47:01'),(8,'GRP0001','USER',1,1,1,1,'2014-08-27 11:47:01','2014-08-27 11:47:01'),(12,'GRP0003','GROUP',1,1,1,1,'2014-08-27 11:47:01','2014-08-27 11:47:01'),(13,'GRP0003','SWITCH',1,1,1,1,'2014-08-27 11:47:01','2014-08-27 11:47:01'),(14,'GRP0003','USER',1,1,1,1,'2014-08-27 11:47:01','2014-08-27 11:47:01');
 
 /*Table structure for table `rems_log` */
 
@@ -175,7 +177,7 @@ CREATE TABLE `rems_users_grouplist` (
 
 /*Data for the table `rems_users_grouplist` */
 
-insert  into `rems_users_grouplist`(`username`,`groupid`) values ('admin','GRP0001'),('superadmin','GRP0001'),('superadmin','GRP0002'),('operator','GRP0004');
+insert  into `rems_users_grouplist`(`username`,`groupid`) values ('admin','GRP0001'),('superadmin','GRP0001'),('superadmin','GRP0002');
 
 /*Table structure for table `user_attempts` */
 

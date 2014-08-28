@@ -4,12 +4,12 @@
 package com.cti.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,11 +82,15 @@ public class UserDAOEx implements UserDAO {
 	@Override
 	public boolean updatePassword(User user) {
 		try {
-			user.setPassword(passwordEncoder.encode(user.getPassword()));
+			/*user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-			getCurrentSession().update(user);
+			user.setModifiedtime(new Date());
+*/
+			getCurrentSession().save(user);
+
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 	}
@@ -113,16 +117,6 @@ public class UserDAOEx implements UserDAO {
 	@Override
 	public boolean removeUser(String username) {
 
-		// Revisit in future
-		/*
-		 * User user = (User) getCurrentSession().load(User.class, username);
-		 * 
-		 * if (user != null) {
-		 * 
-		 * getCurrentSession().delete(user);
-		 * 
-		 * return false; } return false;
-		 */
 		return deleteAllUserRecords(username);
 	}
 

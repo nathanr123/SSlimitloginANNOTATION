@@ -12,12 +12,14 @@ import com.cti.model.UserGroupPermission;
  *
  */
 public interface GroupPermissionDAO {
-	
+
 	public void setGroupPerssions(UserGroupPermission userGroupPermission);
-	
-	public void setGroupPerssions(List<UserGroupPermission> userGroupPermissionList);
-	
-	public List<UserGroupPermission> getGroupPerssions(String groupId,String componentName);
+
+	public void setGroupPerssions(
+			List<UserGroupPermission> userGroupPermissionList);
+
+	public UserGroupPermission getGroupPerssions(String groupId,
+			String componentName);
 
 	public List<UserGroupPermission> getGroupPerssionsByGroupId(String groupId);
 

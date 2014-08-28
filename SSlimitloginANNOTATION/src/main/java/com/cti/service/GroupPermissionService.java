@@ -20,7 +20,7 @@ public interface GroupPermissionService {
 
 	public void setGroupPerssions(List<UserGroupPermission> userGroupPermissionList);
 	
-	public List<UserGroupPermission> getGroupPerssions(String groupId,String componentName);
+	public UserGroupPermission getGroupPerssions(String groupId,String componentName);
 	
 	public List<UserGroupPermission> getGroupPerssionsByGroupId(String groupId);
 

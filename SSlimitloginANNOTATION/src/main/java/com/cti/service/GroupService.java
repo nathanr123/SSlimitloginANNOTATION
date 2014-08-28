@@ -16,6 +16,10 @@ public interface GroupService {
 	public void deletGroup(String groupId);
 
 	public UserGroup getGroupById(String groupId);
+	
+	public boolean isGroupAvaliable(String groupId);
+
+	public String getLatestGroupID();
 
 	public List<UserGroup> listGroups();
 

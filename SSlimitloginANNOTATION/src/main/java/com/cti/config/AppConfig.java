@@ -82,7 +82,7 @@ public class AppConfig {
 		
 		prop.put("hibernate.format_sql", "true");
 		
-		prop.put("hibernate.show_sql", "true");
+		prop.put("hibernate.show_sql", "false");
 		
 		prop.put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
 		

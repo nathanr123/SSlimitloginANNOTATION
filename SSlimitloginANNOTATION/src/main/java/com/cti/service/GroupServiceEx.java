@@ -80,4 +80,15 @@ public class GroupServiceEx implements GroupService {
 		return groupDAO.listGroups(grpList);
 	}
 
+	@Override
+	public String getLatestGroupID() {
+		return groupDAO.getLatestGroupID();
+	}
+
+	@Override
+	public boolean isGroupAvaliable(String groupId) {
+
+		return groupDAO.isGroupAvaliable(groupId);
+	}
+
 }

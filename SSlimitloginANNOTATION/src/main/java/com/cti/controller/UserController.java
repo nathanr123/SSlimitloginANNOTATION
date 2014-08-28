@@ -1,5 +1,6 @@
 package com.cti.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -10,6 +11,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cti.model.ChangePassword;
 import com.cti.model.User;
 import com.cti.model.UserDetail;
 import com.cti.service.UserDetailsService;
@@ -37,6 +40,9 @@ public class UserController {
 
 	@Autowired
 	UserDetailsService userDetailService;
+
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 
 	@Autowired
 	@Qualifier("userFormValidator")
@@ -67,6 +73,54 @@ public class UserController {
 		model.put("userForm", userForm);
 
 		mav.setViewName("user");
+
+		return mav;
+	}
+
+	@RequestMapping(value = "/changePassword", method = RequestMethod.GET)
+	public @ResponseBody ModelAndView goToChangePassword(Principal principal,
+			Map<String, Object> model) {
+
+		ModelAndView mav = new ModelAndView();
+
+		ChangePassword changePasswordForm = new ChangePassword();
+
+		System.out.println(principal.getName());
+
+		changePasswordForm.setUsername(principal.getName());
+
+		model.put("changePasswordForm", changePasswordForm);
+
+		mav.setViewName("changepassword");
+
+		return mav;
+	}
+
+	@RequestMapping(value = "/doChangePassword", method = RequestMethod.POST)
+	public @ResponseBody ModelAndView doChangePassword(
+			@ModelAttribute("changePasswordForm") ChangePassword changePasswordForm,
+			BindingResult result, Map<String, Object> model,
+			SessionStatus status) {
+
+		ModelAndView mav = new ModelAndView();
+
+		User usr = userService.getUserById(changePasswordForm.getUsername());
+
+		if (passwordEncoder.matches(changePasswordForm.getOldPassword(),
+				usr.getPassword())) {
+
+			usr.setPassword(passwordEncoder.encode(changePasswordForm
+					.getNewPassword()));
+
+			usr.setModifiedtime(new Date());
+
+			userService.updateUser(usr);
+			
+			mav.addObject("msg", "Password Changed Successfully");
+		}
+		else{mav.addObject("msg", "Password Does not match");}
+
+		mav.setViewName("hello");
 
 		return mav;
 	}
@@ -146,8 +200,7 @@ public class UserController {
 		if (!userService.removeUser(user)) {
 
 			mav.addObject("msg", "Unable to delete " + user + ".");
-		}
-		else {
+		} else {
 			mav.addObject("msg", user + " successfully deleted.");
 		}
 		mav.addObject("userlist", getAllUsersDetail());

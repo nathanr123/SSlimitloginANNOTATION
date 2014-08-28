@@ -1,5 +1,6 @@
 package com.cti.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -7,29 +8,38 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "rems_group")
-public class UserGroup {
+public class UserGroup implements Serializable {
 
 	// Variables for corresponding to DB Table
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7996266639669172483L;
 
 	private String groupid;
 
 	private String groupname;
 
-	private String priority;
+	private int priority;
 
 	private Date createdtime;
 
 	private Date modifiedtime;
 
 	private Set<User> users = new HashSet<User>();
+
+	private Set<UserGroupPermission> userGroupPermissions = new HashSet<UserGroupPermission>();
 
 	public UserGroup() {
 		// TODO Auto-generated constructor stub
@@ -42,7 +52,7 @@ public class UserGroup {
 	 * @param createdtime
 	 * @param modifiedtime
 	 */
-	public UserGroup(String groupid, String groupname, String priority,
+	public UserGroup(String groupid, String groupname, int priority,
 			Date createdtime, Date modifiedtime) {
 
 		this.groupid = groupid;
@@ -71,14 +81,6 @@ public class UserGroup {
 	@Column(name = "groupname", nullable = false, length = 35)
 	public String getGroupname() {
 		return groupname;
-	}
-
-	/**
-	 * @return the priority
-	 */
-	@Column(name = "priority", nullable = false)
-	public String getPriority() {
-		return priority;
 	}
 
 	/**
@@ -114,14 +116,6 @@ public class UserGroup {
 	}
 
 	/**
-	 * @param priority
-	 *            the priority to set
-	 */
-	public void setPriority(String priority) {
-		this.priority = priority;
-	}
-
-	/**
 	 * @param createdtime
 	 *            the createdtime to set
 	 */
@@ -154,8 +148,41 @@ public class UserGroup {
 		this.users = users;
 	}
 
+	/**
+	 * @return the priority
+	 */
+	@Column(name = "priority", nullable = false)
+	public int getPriority() {
+		return priority;
+	}
+
+	/**
+	 * @param priority
+	 *            the priority to set
+	 */
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
+
 	public void addUserToGroup(User usr) {
 		this.users.add(usr);
+	}
+
+	/**
+	 * @return the userGroupPermissions
+	 */
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "groups", cascade = CascadeType.ALL)
+	public Set<UserGroupPermission> getUserGroupPermissions() {
+		return userGroupPermissions;
+	}
+
+	/**
+	 * @param userGroupPermissions
+	 *            the userGroupPermissions to set
+	 */
+	public void setUserGroupPermissions(
+			Set<UserGroupPermission> userGroupPermissions) {
+		this.userGroupPermissions = userGroupPermissions;
 	}
 
 }
