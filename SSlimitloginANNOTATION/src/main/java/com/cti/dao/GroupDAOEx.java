@@ -15,9 +15,6 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.cti.model.User;
-import com.cti.model.UserAttempts;
-import com.cti.model.UserDetail;
 import com.cti.model.UserGroup;
 import com.cti.model.UserGroupPermission;
 import com.cti.model.UsersGroupList;
@@ -113,7 +110,7 @@ public class GroupDAOEx implements GroupDAO {
 
 			for (Iterator<String> iterator = grpList.iterator(); iterator
 					.hasNext();) {
-				String group = (String) iterator.next();
+				String group = iterator.next();
 
 				userGroupList.add(getGroupById(group));
 

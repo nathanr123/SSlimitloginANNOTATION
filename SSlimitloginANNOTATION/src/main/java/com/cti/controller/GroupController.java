@@ -29,7 +29,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cti.model.GroupPermissionForComponents;
 import com.cti.model.User;
 import com.cti.model.UserAndGroupList;
-import com.cti.model.UserDetail;
 import com.cti.model.UserGroup;
 import com.cti.model.UserGroupPermission;
 import com.cti.service.GroupPermissionService;

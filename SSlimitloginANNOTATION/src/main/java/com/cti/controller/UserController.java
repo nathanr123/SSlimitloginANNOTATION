@@ -52,6 +52,10 @@ public class UserController {
 	@Qualifier("userDetailFormValidator")
 	Validator userDetailValidator;
 
+	@Autowired
+	@Qualifier("changePasswordFormValidator")
+	Validator changePasswordValidator;
+
 	@InitBinder("userForm")
 	protected void initUserBinder(WebDataBinder binder) {
 		binder.setValidator(userValidator);
@@ -60,6 +64,11 @@ public class UserController {
 	@InitBinder("userdetailForm")
 	protected void initUserDetailBinder(WebDataBinder binder) {
 		binder.setValidator(userDetailValidator);
+	}
+
+	@InitBinder("changePasswordForm")
+	protected void initChangePasswordBinder(WebDataBinder binder) {
+		binder.setValidator(changePasswordValidator);
 	}
 
 	@RequestMapping(value = "/newuser", method = RequestMethod.GET)
@@ -85,8 +94,6 @@ public class UserController {
 
 		ChangePassword changePasswordForm = new ChangePassword();
 
-		System.out.println(principal.getName());
-
 		changePasswordForm.setUsername(principal.getName());
 
 		model.put("changePasswordForm", changePasswordForm);
@@ -104,23 +111,28 @@ public class UserController {
 
 		ModelAndView mav = new ModelAndView();
 
+		changePasswordValidator.validate(changePasswordForm, result);
+		
 		User usr = userService.getUserById(changePasswordForm.getUsername());
 
-		if (passwordEncoder.matches(changePasswordForm.getOldPassword(),
-				usr.getPassword())) {
+		if (result.hasErrors()) {
 
+			mav.setViewName("changepassword");
+		}
+
+		else {
+			
 			usr.setPassword(passwordEncoder.encode(changePasswordForm
 					.getNewPassword()));
 
 			usr.setModifiedtime(new Date());
 
 			userService.updateUser(usr);
-			
-			mav.addObject("msg", "Password Changed Successfully");
-		}
-		else{mav.addObject("msg", "Password Does not match");}
 
-		mav.setViewName("hello");
+			mav.addObject("msg", "Password Changed Successfully");
+
+			mav.setViewName("hello");
+		}
 
 		return mav;
 	}
