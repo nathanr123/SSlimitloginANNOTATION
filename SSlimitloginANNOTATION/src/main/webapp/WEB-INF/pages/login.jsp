@@ -33,15 +33,10 @@
 	width: 300px;
 	padding: 20px;
 	margin: 100px auto;
-	background-color: #333;
-	-webkit-border-radius: 2px;
-	-moz-border-radius: 2px;
-	border: 1px solid #000;
 }
 
 #login-table {
-	color: white;
-	background-color: #333;
+	color: black;
 }
 
 @font-face {
@@ -79,7 +74,7 @@ BODY {
 .boldtext {
 	font-family: 'Segoe UI';
 	font-weight: 700;
-	color: white;
+	color: black;
 }
 
 .normaltext {
